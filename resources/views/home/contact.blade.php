@@ -7,9 +7,8 @@
     <meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-
     <!-- title -->
-    <title>Enak Jaya Restaurant</title>
+    <title>Contact</title>
 
     <!-- favicon -->
     <link rel="shortcut icon" type="image/png" href="assets/img/favicon.png">
@@ -61,9 +60,9 @@
                     <!-- menu start -->
                     <nav class="main-menu">
                         <ul>
-                            <li class="current-list-item"><a href="{{ url('/') }}">Home</a>
+                            <li><a href="{{ url('/') }}">Home</a>
                             </li>
-                            <li><a href="{{ url('contact') }}">Contact</a></li>
+                            <li class="current-list-item"><a href="{{ url('contact') }}">Contact</a></li>
                             <li><a href={{ url('shop')}}>Shop</a>
                                 <ul class="sub-menu">
                                     <li><a href={{ url('shop')}}>Shop</a></li>
@@ -74,7 +73,7 @@
                             <li>
                                 <div class="header-icons">
                                     <a class="shopping-cart" href="{{ url('/cart') }}"><i class="fas fa-shopping-cart"></i></a>
-                                    <a href="{{ url('login') }}"><i class="fas fa-user"></i></a>
+                                    <a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
                                 </div>
                             </li>
                         </ul>
@@ -106,107 +105,87 @@
         </div>
     </div>
 </div>
-<!-- end search area -->
+<!-- end search arewa -->
 
-<!-- hero area -->
-<div class="hero-area hero-bg">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-9 offset-lg-2 text-center">
-                <div class="hero-text">
-                    <div class="hero-text-tablecell">
-                        <p class="subtitle">Taste of Java</p>
-                        <h1>Authentic Javanese Dishes</h1>
-                        <div class="hero-btns">
-                            <a href="{{ url('/shop') }}" class="boxed-btn">Our Menu</a>
-                            <a href="{{ url('/contact') }}" class="bordered-btn">Contact Us</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- end hero area -->
-
-<!-- features list section -->
-<div class="list-section pt-80 pb-80">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                <div class="list-box d-flex align-items-center justify-content-center">
-                    <div class="list-icon">
-                        <i class="fas fa-shipping-fast"></i>
-                    </div>
-                    <div class="content">
-                        <h3>Free Delivery</h3>
-                        <p>When order over $999</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                <div class="list-box d-flex align-items-center justify-content-center">
-                    <div class="list-icon">
-                        <i class="fas fa-phone-volume"></i>
-                    </div>
-                    <div class="content">
-                        <h3>Open 24/7</h3>
-                        <p>We Open All Day</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- end features list section -->
-
-<!-- product section -->
-<div class="product-section mt-150 mb-150">
+<!-- breadcrumb-section -->
+<div class="breadcrumb-section breadcrumb-bg">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 offset-lg-2 text-center">
-                <div class="section-title">
-                    <h3><span class="orange-text">Our</span> Menu</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, fuga quas itaque eveniet beatae optio.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-lg-4 col-md-6 text-center">
-                <div class="single-product-item">
-                    <div class="product-image">
-                        <a href="{{ url('product') }}"><img src="assets/img/products/nasigoreng.jpg" alt=""></a>
-                    </div>
-                    <h3>Nasi Goreng</h3>
-                    <p class="product-price"><span>Per Pcs</span> 85$ </p>
-                    <a href="{{ url('cart') }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 text-center">
-                <div class="single-product-item">
-                    <div class="product-image">
-                        <a href="{{ url('product') }}"><img src="assets/img/products/mujaer.jpg" alt=""></a>
-                    </div>
-                    <h3>Ikan Mujair Bakar</h3>
-                    <p class="product-price"><span>Per Pcs</span> 70$ </p>
-                    <a href="{{ url('cart') }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0 text-center">
-                <div class="single-product-item">
-                    <div class="product-image">
-                        <a href="{{ url('product')}}"><img src="assets/img/products/nasigudeg.jpg" alt=""></a>
-                    </div>
-                    <h3>Nasi Gudeg</h3>
-                    <p class="product-price"><span>Per Pcs</span> 35$ </p>
-                    <a href="{{ url('cart') }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                <div class="breadcrumb-text">
+                    <p>Get 24/7 Support</p>
+                    <h1>Contact us</h1>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- end product section -->
+<!-- end breadcrumb section -->
+
+<!-- contact form -->
+<div class="contact-from-section mt-150 mb-150">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mb-5 mb-lg-0">
+                <div class="form-title">
+                    <h2>Have you any question?</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur, ratione! Laboriosam est, assumenda. Perferendis, quo alias quaerat aliquid. Corporis ipsum minus voluptate? Dolore, esse natus!</p>
+                </div>
+                <div id="form_status"></div>
+                <div class="contact-form">
+                    <form type="POST" id="fruitkha-contact" onSubmit="return valid_datas( this );">
+                        <p>
+                            <input type="text" placeholder="Name" name="name" id="name">
+                            <input type="email" placeholder="Email" name="email" id="email">
+                        </p>
+                        <p>
+                            <input type="tel" placeholder="Phone" name="phone" id="phone">
+                            <input type="text" placeholder="Subject" name="subject" id="subject">
+                        </p>
+                        <p><textarea name="message" id="message" cols="30" rows="10" placeholder="Message"></textarea></p>
+                        <input type="hidden" name="token" value="FsWga4&@f6aw" />
+                        <p><input type="submit" value="Submit"></p>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="contact-form-wrap">
+                    <div class="contact-form-box">
+                        <h4><i class="fas fa-map"></i> Shop Address</h4>
+                        <p>34/8, East Hukupara <br> Gifirtok, Sadan. <br> Country Name</p>
+                    </div>
+                    <div class="contact-form-box">
+                        <h4><i class="far fa-clock"></i> Shop Hours</h4>
+                        <p>MON - FRIDAY: 8 to 9 PM <br> SAT - SUN: 10 to 8 PM </p>
+                    </div>
+                    <div class="contact-form-box">
+                        <h4><i class="fas fa-address-book"></i> Contact</h4>
+                        <p>Phone: +00 111 222 3333 <br> Email: support@fruitkha.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end contact form -->
+
+<!-- find our location -->
+<div class="find-location blue-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <p> <i class="fas fa-map-marker-alt"></i> Find Our Location</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end find our location -->
+
+<!-- google map section -->
+<div class="embed-responsive embed-responsive-21by9">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1176.6560427515647!2d112.78459867894043!3d-7.2654740089699!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fb7a9bdf4517%3A0x5b8bbf8317f96ed5!2sGedung%20Kuliah%20Bersama%20(GKB)%20Kampus%20C%20Unair!5e0!3m2!1sid!2sid!4v1726999652001!5m2!1sid!2sid" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" class="embed-responsive-item"></iframe>
+</div>
+<!-- end google map section -->
 
 
 <!-- footer -->
@@ -243,7 +222,7 @@
                 <div class="footer-box subscribe">
                     <h2 class="widget-title">Subscribe</h2>
                     <p>Subscribe to our mailing list to get the latest updates.</p>
-                    <form action="">
+                    <form action="index.html">
                         <input type="email" placeholder="Email">
                         <button type="submit"><i class="fas fa-paper-plane"></i></button>
                     </form>
@@ -273,6 +252,8 @@
 <script src="assets/js/jquery.meanmenu.min.js"></script>
 <!-- sticker js -->
 <script src="assets/js/sticker.js"></script>
+<!-- form validation js -->
+<script src="assets/js/form-validate.js"></script>
 <!-- main js -->
 <script src="assets/js/main.js"></script>
 

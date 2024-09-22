@@ -7,9 +7,8 @@
     <meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-
     <!-- title -->
-    <title>Enak Jaya Restaurant</title>
+    <title>Single Product</title>
 
     <!-- favicon -->
     <link rel="shortcut icon" type="image/png" href="assets/img/favicon.png">
@@ -53,7 +52,7 @@
                     <!-- logo -->
                     <div class="site-logo">
                         <a href="{{ url('/') }}">
-                            <img src="assets/img/LOGOS.png" alt="">
+                            <img src="assets/img/logo.png" alt="">
                         </a>
                     </div>
                     <!-- logo -->
@@ -61,10 +60,10 @@
                     <!-- menu start -->
                     <nav class="main-menu">
                         <ul>
-                            <li class="current-list-item"><a href="{{ url('/') }}">Home</a>
+                            <li><a href="{{ url('/') }}">Home</a>
                             </li>
                             <li><a href="{{ url('contact') }}">Contact</a></li>
-                            <li><a href={{ url('shop')}}>Shop</a>
+                            <li class="current-list-item"><a href={{ url('shop')}}>Shop</a>
                                 <ul class="sub-menu">
                                     <li><a href={{ url('shop')}}>Shop</a></li>
                                     <li><a href="{{ url('checkout') }}">Check Out</a></li>
@@ -73,8 +72,8 @@
                             </li>
                             <li>
                                 <div class="header-icons">
-                                    <a class="shopping-cart" href="{{ url('/cart') }}"><i class="fas fa-shopping-cart"></i></a>
-                                    <a href="{{ url('login') }}"><i class="fas fa-user"></i></a>
+                                    <a class="shopping-cart" href="{{ url('cart') }}"><i class="fas fa-shopping-cart"></i></a>
+                                    <a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
                                 </div>
                             </li>
                         </ul>
@@ -106,108 +105,104 @@
         </div>
     </div>
 </div>
-<!-- end search area -->
+<!-- end search arewa -->
 
-<!-- hero area -->
-<div class="hero-area hero-bg">
+<!-- breadcrumb-section -->
+<div class="breadcrumb-section breadcrumb-bg">
     <div class="container">
         <div class="row">
-            <div class="col-lg-9 offset-lg-2 text-center">
-                <div class="hero-text">
-                    <div class="hero-text-tablecell">
-                        <p class="subtitle">Taste of Java</p>
-                        <h1>Authentic Javanese Dishes</h1>
-                        <div class="hero-btns">
-                            <a href="{{ url('/shop') }}" class="boxed-btn">Our Menu</a>
-                            <a href="{{ url('/contact') }}" class="bordered-btn">Contact Us</a>
-                        </div>
-                    </div>
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>See more Details</p>
+                    <h1>Single Product</h1>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- end hero area -->
+<!-- end breadcrumb section -->
 
-<!-- features list section -->
-<div class="list-section pt-80 pb-80">
+<!-- single product -->
+<div class="single-product mt-150 mb-150">
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                <div class="list-box d-flex align-items-center justify-content-center">
-                    <div class="list-icon">
-                        <i class="fas fa-shipping-fast"></i>
-                    </div>
-                    <div class="content">
-                        <h3>Free Delivery</h3>
-                        <p>When order over $999</p>
-                    </div>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="single-product-img">
+                    <img src="assets/img/products/product-img-5.jpg" alt="">
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                <div class="list-box d-flex align-items-center justify-content-center">
-                    <div class="list-icon">
-                        <i class="fas fa-phone-volume"></i>
+            <div class="col-md-7">
+                <div class="single-product-content">
+                    <h3>Green apples have polyphenols</h3>
+                    <p class="single-product-pricing"><span>Per Kg</span> $50</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta sint dignissimos, rem commodi cum voluptatem quae reprehenderit repudiandae ea tempora incidunt ipsa, quisquam animi perferendis eos eum modi! Tempora, earum.</p>
+                    <div class="single-product-form">
+                        <form action="index.html">
+                            <input type="number" placeholder="0">
+                        </form>
+                        <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                        <p><strong>Categories: </strong>Fruits, Organic</p>
                     </div>
-                    <div class="content">
-                        <h3>Open 24/7</h3>
-                        <p>We Open All Day</p>
-                    </div>
+                    <h4>Share:</h4>
+                    <ul class="product-share">
+                        <li><a href=""><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href=""><i class="fab fa-twitter"></i></a></li>
+                        <li><a href=""><i class="fab fa-google-plus-g"></i></a></li>
+                        <li><a href=""><i class="fab fa-linkedin"></i></a></li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- end features list section -->
+<!-- end single product -->
 
-<!-- product section -->
-<div class="product-section mt-150 mb-150">
+<!-- more products -->
+<div class="more-products mb-150">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 offset-lg-2 text-center">
                 <div class="section-title">
-                    <h3><span class="orange-text">Our</span> Menu</h3>
+                    <h3><span class="orange-text">Related</span> Products</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, fuga quas itaque eveniet beatae optio.</p>
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-lg-4 col-md-6 text-center">
                 <div class="single-product-item">
                     <div class="product-image">
-                        <a href="{{ url('product') }}"><img src="assets/img/products/nasigoreng.jpg" alt=""></a>
+                        <a href="single-product.html"><img src="assets/img/products/product-img-1.jpg" alt=""></a>
                     </div>
-                    <h3>Nasi Goreng</h3>
-                    <p class="product-price"><span>Per Pcs</span> 85$ </p>
-                    <a href="{{ url('cart') }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                    <h3>Strawberry</h3>
+                    <p class="product-price"><span>Per Kg</span> 85$ </p>
+                    <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 text-center">
                 <div class="single-product-item">
                     <div class="product-image">
-                        <a href="{{ url('product') }}"><img src="assets/img/products/mujaer.jpg" alt=""></a>
+                        <a href="single-product.html"><img src="assets/img/products/product-img-2.jpg" alt=""></a>
                     </div>
-                    <h3>Ikan Mujair Bakar</h3>
-                    <p class="product-price"><span>Per Pcs</span> 70$ </p>
-                    <a href="{{ url('cart') }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                    <h3>Berry</h3>
+                    <p class="product-price"><span>Per Kg</span> 70$ </p>
+                    <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0 text-center">
+            <div class="col-lg-4 col-md-6 offset-lg-0 offset-md-3 text-center">
                 <div class="single-product-item">
                     <div class="product-image">
-                        <a href="{{ url('product')}}"><img src="assets/img/products/nasigudeg.jpg" alt=""></a>
+                        <a href="single-product.html"><img src="assets/img/products/product-img-3.jpg" alt=""></a>
                     </div>
-                    <h3>Nasi Gudeg</h3>
-                    <p class="product-price"><span>Per Pcs</span> 35$ </p>
-                    <a href="{{ url('cart') }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                    <h3>Lemon</h3>
+                    <p class="product-price"><span>Per Kg</span> 35$ </p>
+                    <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- end product section -->
-
+<!-- end more products -->
 
 <!-- footer -->
 <div class="footer-area">
@@ -243,7 +238,7 @@
                 <div class="footer-box subscribe">
                     <h2 class="widget-title">Subscribe</h2>
                     <p>Subscribe to our mailing list to get the latest updates.</p>
-                    <form action="">
+                    <form action="index.html">
                         <input type="email" placeholder="Email">
                         <button type="submit"><i class="fas fa-paper-plane"></i></button>
                     </form>

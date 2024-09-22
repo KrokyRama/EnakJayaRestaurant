@@ -9,4 +9,18 @@ class HomeController extends Controller
     {
         return view('home.index');
     }
+    public function shop()
+    {
+        return view('home.shop');
+    }
+
+    public function contact()
+    {
+        return view('home.contact');
+    }
+
+    public function login()
+    {
+        return view('auth.login');
+    }
 }
