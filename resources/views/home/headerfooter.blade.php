@@ -38,7 +38,7 @@
 </head>
 
 <body>
-@yield('content')
+    @yield('content')
 
 <!-- footer -->
 <div class="footer-area">
@@ -90,8 +90,8 @@
                             <i class="fa-brands fa-tiktok"></i>
                         </a>
                     </div>
-                    
-                    
+
+
                 </div>
             </div>
         </div>

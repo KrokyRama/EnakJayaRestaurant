@@ -97,57 +97,46 @@
 </div>
 <!-- end breadcrumb section -->
 
-<!-- register form -->
+<!-- login form -->
 <div class="register-section mt-150 mb-150">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 offset-lg-2">
+            <div class="col-lg-6 offset-lg-3">
                 <div class="register-form">
                     <h2>Register</h2>
-                    <form action="#" method="POST" autocomplete="off">
+                    <form method="POST" action="{{ route('register') }}" autocomplete="off">
                         @csrf
                         <div class="form-group">
-                            <label for="nama">Nama</label>
-                            <input type="text" class="form-control" id="nama" name="nama" required maxlength="255">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                            @error('name')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" required maxlength="255">
+                            <input type="email" class="form-control" id="email" name="email" required>
+                            @error('email')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" required minlength="8">
+                            <input type="password" class="form-control" id="password" name="password" required>
                         </div>
                         <div class="form-group">
-                            <label for="password_confirmation">Konfirmasi Password</label>
-                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required minlength="8">
-                        </div>
-                        <div class="form-group">
-                            <label for="nomor_telepon">Nomor Telepon</label>
-                            <input type="tel" class="form-control" id="nomor_telepon" name="nomor_telepon" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Gender</label>
-                            <div>
-                                <label class="radio-inline">
-                                    <input type="radio" name="gender" value="L" required> Laki-laki
-                                </label>
-                                <label class="radio-inline" style="margin-left: 10px;">
-                                    <input type="radio" name="gender" value="P" required> Perempuan
-                                </label>
-                            </div>
+                            <label for="password_confirmation">Confirm Password</label>
+                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
                         </div>
                         <button type="submit" class="boxed-btn">Register</button>
                     </form>
-                    <div class="login-link">
-                        <p>Sudah punya akun? <a href="{{ url('login') }}">Login disini</a></p>
-                    </div>
+                    <p>Sudah punya akun? <a href="{{ url('/login') }}">Login</a></p>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- end register form -->
+<!-- end login form -->
 
 <!-- footer -->
 <div class="footer-area">

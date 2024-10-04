@@ -18,6 +18,7 @@ return new class extends Migration
             $table->decimal('price', 10, 2);
             $table->string('foto');
             $table->text('deskripsi');
+            $table->integer('stok');
             $table->timestamps();
         });
 

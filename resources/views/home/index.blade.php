@@ -1,5 +1,6 @@
 @extends('home.headerfooter')
 @section('content')
+
 <!-- header -->
 <div class="top-header-area" id="sticker">
     <div class="container">
@@ -30,7 +31,7 @@
                             <li>
                                 <div class="header-icons">
                                     <a class="shopping-cart" href="{{ url('/cart') }}"><i class="fas fa-shopping-cart"></i></a>
-                                    <a href="{{ url('login') }}"><i class="fas fa-user"></i></a>
+                                    <a href="{{ url('/login') }}"><i class="fas fa-user"></i></a>
                                 </div>
                             </li>
                         </ul>
