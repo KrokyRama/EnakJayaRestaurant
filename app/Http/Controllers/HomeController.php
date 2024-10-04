@@ -1,17 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Menu;
 use illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        return view('home.index');
-    }
+        // ubah sesuai menu yang ingin ditampilkan berdasarkan id
+        $menus = Menu::whereIn('menu_id', [4, 12, 20])->get();
+        return view('home.index', compact('menus'));    }
     public function shop()
     {
-        return view('home.shop');
+        $allmenus = Menu::all();
+        return view('home.shop', compact('allmenus'));
     }
 
     public function contact()
@@ -28,4 +31,5 @@ class HomeController extends Controller
     {
         return view('admin');
     }
+
 }

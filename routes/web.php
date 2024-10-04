@@ -25,6 +25,5 @@ Route::get('/shop', [HomeController::class, 'shop']);
 Route::get('/contact', [HomeController::class, 'contact']);
 
 Route::get('/checkout', [ProductController::class, 'checkout'])->name('checkout');
-//Route::get('/product/{id}', [ProductController::class, 'singleProduct'])->name('singleProduct');
-Route::get('/product', [ProductController::class, 'singleProduct'])->name('singleProduct');
+Route::get('/product/{id}', [ProductController::class, 'show'])->name('singleProduct');
 Route::get('/cart', [ProductController::class, 'cart'])->name('cart');

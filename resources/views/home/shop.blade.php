@@ -97,66 +97,22 @@
         </div>
 
         <div class="row product-lists">
-            <div class="col-lg-4 col-md-6 text-center makanan">
-                <div class="single-product-item">
-                    <div class="product-image">
-                        <a href="{{ url('product') }}"><img src="assets/img/products/nasigoreng.jpg" alt=""></a>
+            @foreach($allmenus as $menu)
+                <div class="col-lg-4 col-md-6 text-center {{ strtolower($menu->kategori) }}">
+                    <div class="single-product-item">
+                        <div class="product-image">
+                            <a href="{{ url('product', $menu->menu_id) }}">
+                                <img src="{{ asset($menu->foto) }}" alt="{{ $menu->nama_menu }}">
+                            </a>
+                        </div>
+                        <h3>{{ $menu->nama_menu }}</h3>
+                        <p class="product-price"><span>Per Pcs</span> Rp {{ number_format($menu->price, 0, ',', '.') }} </p>
+                        <a href="{{ url('cart', $menu->menu_id) }}" class="cart-btn">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </a>
                     </div>
-                    <h3>Nasi Goreng</h3>
-                    <p class="product-price"><span>Per Pcs</span> 85$ </p>
-                    <a href="{{ url('cart') }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                 </div>
-            </div>
-            <div class="col-lg-4 col-md-6 text-center makanan">
-                <div class="single-product-item">
-                    <div class="product-image">
-                        <a href="{{ url('product') }}"><img src="assets/img/products/mujaer.jpg" alt=""></a>
-                    </div>
-                    <h3>Mujair Bakar</h3>
-                    <p class="product-price"><span>Per Pcs</span> 70$ </p>
-                    <a href="{{ url('cart') }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 text-center makanan">
-                <div class="single-product-item">
-                    <div class="product-image">
-                        <a href="{{ url('product') }}"><img src="assets/img/products/nasigudeg.jpg" alt=""></a>
-                    </div>
-                    <h3>Nasi Gudeg</h3>
-                    <p class="product-price"><span>Per Pcs</span> 35$ </p>
-                    <a href="{{ url('cart') }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 text-center ekstra">
-                <div class="single-product-item">
-                    <div class="product-image">
-                        <a href="{{ url('product') }}"><img src="assets/img/products/cahkangkung.jpg" alt=""></a>
-                    </div>
-                    <h3>Cah kangkung</h3>
-                    <p class="product-price"><span>Per Pcs</span> 50$ </p>
-                    <a href="{{ url('cart') }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 text-center ekstra">
-                <div class="single-product-item">
-                    <div class="product-image">
-                        <a href="{{ url('product') }}"><img src="assets/img/products/tempemedoan.jpg" alt=""></a>
-                    </div>
-                    <h3>Tempe Mendoan</h3>
-                    <p class="product-price"><span>Per Pcs</span> 45$ </p>
-                    <a href="{{ url('cart') }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 text-center minuman">
-                <div class="single-product-item">
-                    <div class="product-image">
-                        <a href="{{ url('product') }}"><img src="assets/img/products/esteh.jpg" alt=""></a>
-                    </div>
-                    <h3>Es Teh</h3>
-                    <p class="product-price"><span>Per Pcs</span> 80$ </p>
-                    <a href="{{ url('cart') }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-                </div>
-            </div>
+            @endforeach
         </div>
 
         <div class="row">

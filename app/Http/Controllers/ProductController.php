@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Menu;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -13,13 +13,22 @@ class ProductController extends Controller
     }
 
     // Method for single product page
-    public function singleProduct() // masukin $id
+    public function show($id)
     {
-        // Fetch product details using the $id
-//        $product = Product::find($id);
-//        return view('product.single-product', compact('product'));
+        $product = Menu::findOrFail($id);
+        $rmenus = Menu::where('menu_id', '!=', $id)
+            ->inRandomOrder()
+            ->limit(3)
+            ->get();
+        return view('product.single-product', compact('product', 'rmenus'));
 
-        return view('product.single-product');
+    }
+
+    // untuk shop
+    public function shop()
+    {
+        $allmenus = Menu::all();
+        return view('home.shop', compact('allmenus'));
     }
 
     // Method for cart page
@@ -27,4 +36,5 @@ class ProductController extends Controller
     {
         return view('product.cart');
     }
+
 }

@@ -11,26 +11,26 @@
     <title>Single Product</title>
 
     <!-- favicon -->
-    <link rel="shortcut icon" type="image/png" href="assets/img/favicon.png">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('assets/img/favicon.png') }}">
     <!-- google font -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
     <!-- fontawesome -->
-    <link rel="stylesheet" href="assets/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/all.min.css') }}">
     <!-- bootstrap -->
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}">
     <!-- owl carousel -->
-    <link rel="stylesheet" href="assets/css/owl.carousel.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.css') }}">
     <!-- magnific popup -->
-    <link rel="stylesheet" href="assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/magnific-popup.css') }}">
     <!-- animate css -->
-    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}">
     <!-- mean menu css -->
-    <link rel="stylesheet" href="assets/css/meanmenu.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/meanmenu.min.css') }}">
     <!-- main style -->
-    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
     <!-- responsive -->
-    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
 
 </head>
 <body>
@@ -114,7 +114,7 @@
             <div class="col-lg-8 offset-lg-2 text-center">
                 <div class="breadcrumb-text">
                     <p>See more Details</p>
-                    <h1>Single Product</h1>
+                    <h1>{{ $product->nama_menu }}</h1>
                 </div>
             </div>
         </div>
@@ -128,20 +128,21 @@
         <div class="row">
             <div class="col-md-5">
                 <div class="single-product-img">
-                    <img src="assets/img/products/nasigoreng.jpg" alt="">
+                    <img src="{{ asset($product->foto) }}" alt="{{ $product->nama_menu }}">
                 </div>
             </div>
             <div class="col-md-7">
                 <div class="single-product-content">
-                    <h3>Green apples have polyphenols</h3>
-                    <p class="single-product-pricing"><span>Per Pcs</span> $85</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta sint dignissimos, rem commodi cum voluptatem quae reprehenderit repudiandae ea tempora incidunt ipsa, quisquam animi perferendis eos eum modi! Tempora, earum.</p>
+                    <h3>{{ $product->nama_menu }}</h3>
+                    <p class="single-product-pricing"><span>Per Pcs</span> Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                    <p>{{ $product->description }}</p>
                     <div class="single-product-form">
-                        <form action="">
-                            <input type="number" placeholder="0">
+                        <form action="{{ url('cart', $product->menu_id) }}" method="POST">
+                            @csrf
+                            <input type="number" name="quantity" value="1" min="1">
+                            <button type="submit" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
                         </form>
-                        <a href="{{ url('cart') }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-                        <p><strong>Categories: </strong>Makanan</p>
+                        <p><strong>Kategori:</strong> {{ $product->kategori }}</p>
                     </div>
                     <h4>Share:</h4>
                     <ul class="product-share">
@@ -169,40 +170,27 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-4 col-md-6 text-center">
-                <div class="single-product-item">
-                    <div class="product-image">
-                        <a href="{{ url('product') }}"><img src="assets/img/products/esteh.jpg" alt=""></a>
+            @foreach($rmenus as $menu)
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="single-product-item">
+                        <div class="product-image">
+                            <a href="{{ url('product/'.$menu->menu_id) }}">
+                                <img src="{{ asset($menu->foto) }}" alt="{{ $menu->nama_menu }}">
+                            </a>
+                        </div>
+                        <h3>{{ $menu->nama_menu }}</h3>
+                        <p class="product-price">
+                            <span>Per Pcs</span> Rp {{ number_format($menu->price, 0, ',', '.') }}
+                        </p>
+                        <a href="{{ url('cart') }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                     </div>
-                    <h3>Es The</h3>
-                    <p class="product-price"><span>Per Pcs</span> 5$ </p>
-                    <a href="{{ url('cart') }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                 </div>
-            </div>
-            <div class="col-lg-4 col-md-6 text-center">
-                <div class="single-product-item">
-                    <div class="product-image">
-                        <a href="{{ url('product') }}"><img src="assets/img/products/cahkangkung.jpg" alt=""></a>
-                    </div>
-                    <h3>Cah Kangkung</h3>
-                    <p class="product-price"><span>Per Pcs</span> 10$ </p>
-                    <a href="{{ url('cart') }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 offset-lg-0 offset-md-3 text-center">
-                <div class="single-product-item">
-                    <div class="product-image">
-                        <a href="{{ url('product')}}"><img src="assets/img/products/tempemedoan.jpg" alt=""></a>
-                    </div>
-                    <h3>Tempe Mendoan</h3>
-                    <p class="product-price"><span>Per Pcs</span> 1$ </p>
-                    <a href="{{ url('cart') }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </div>
 <!-- end more products -->
+
 
 <!-- footer -->
 <div class="footer-area">
