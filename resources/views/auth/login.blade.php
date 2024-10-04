@@ -24,6 +24,16 @@
     <!-- responsive -->
     <link rel="stylesheet" href="assets/css/responsive.css">
 
+    <style>
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .register-link a {
+            color: #F28123;
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
 
@@ -103,8 +113,11 @@
                             <label for="password">Password</label>
                             <input type="password" class="form-control" id="password" name="password" required>
                         </div>
-                        <a href="#" class="boxed-btn">Login</a>
+                        <button type="submit" class="boxed-btn">Login</button>
                     </form>
+                    <div class="register-link">
+                        <p>Tidak punya akun? <a href="{{ url('register') }}">Daftarkan diri Anda!</a></p>
+                    </div>
                 </div>
             </div>
         </div>
