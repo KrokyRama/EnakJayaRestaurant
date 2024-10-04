@@ -1,0 +1,18 @@
+.socmed-icons{
+    text-align: left;
+    font-size: 50px;
+    
+}
+.icons a{
+    text-decoration: none;
+    margin:20 20px;
+}
+.fa-brands.fa-instagram{
+    color: hsl(331, 93%, 37%);
+}
+.fa-brands.fa-facebook{
+    color: hsla(240, 100%, 50%, 0.598);
+}
+.fa-brands.fa-tiktok{
+    color:black;
+}
