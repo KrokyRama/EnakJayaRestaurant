@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ContactController;
 
 
 Route::get('/', [HomeController::class, 'index']);
@@ -36,3 +37,8 @@ Route::get('/cart', [ProductController::class, 'showCart'])->name('cart');
 Route::post('/remove-from-cart', [ProductController::class, 'removeFromCart'])->name('remove.from.cart');
 // Diskon
 Route::post('/cart/discount', [ProductController::class, 'applyDiscount'])->name('cart.discount');
+
+Route::get('/admin/contacts', [ContactController::class, 'index'])->name('contacts.index');
+Route::post('/admin/contacts', [ContactController::class, 'store'])->name('contacts.store');
+Route::delete('/admin/contacts/{id}', [ContactController::class, 'destroy'])->name('contacts.destroy');
+Route::post('/contact', [ContactController::class, 'store'])->name('contacts.store');

@@ -269,7 +269,35 @@
                 </table>
             </div>
         </div>
+
+        <!-- Contacts Section -->
+        <div class="section" id="contactSection">
+        <div class="section-header" onclick="toggleSection('contactSection')">
+        <h2>Data Pesan, Saran, dan Keluhan</h2>
+        <span class="dropdown-icon">▼</span>
+        </div>
+        <div class="section-content">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th>Email</th>
+                    <th>No. Telepon</th>
+                    <th>Subject</th>
+                    <th>Pesan</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody id="contactTableBody">
+                <!-- Data kontak akan dimasukkan di sini -->
+            </tbody>
+        </table>
     </div>
+</div>
+
+    </div>
+
+    
 
     <script>
         // Fungsi untuk toggle section
@@ -368,6 +396,75 @@
                     break;
             }
         }
+
+        // Fungsi untuk memuat data
+        function loadData(sectionId) {
+        if (sectionId === 'contactSection') {
+        fetch('/admin/contacts')
+            .then(response => response.json())
+            .then(data => {
+                fillTable('contactTableBody', data, ['name', 'email', 'phone', 'subject', 'message']);
+            });
+    }
+
+    function deleteItem(id) {
+    fetch(`/admin/contacts/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Pesan berhasil dihapus');
+            loadData('contactSection'); // Reload data kontak setelah delete
+        }
+    });
+    }
+
+
+        // Fungsi untuk mengisi tabel
+        function fillTable(tableId, data, columns) {
+        const tableBody = document.getElementById(tableId);
+        tableBody.innerHTML = '';
+        data.forEach(item => {
+            const row = document.createElement('tr');
+            columns.forEach(column => {
+                const cell = document.createElement('td');
+                cell.textContent = item[column];
+                row.appendChild(cell);
+            });
+            const actionCell = document.createElement('td');
+            actionCell.innerHTML = `
+                <div class="action-buttons">
+                    <button class="edit-btn" onclick="editItem(${item.id})">Edit</button>
+                    <button class="delete-btn" onclick="deleteItem(${item.id})">Delete</button>
+                </div>
+            `;
+            row.appendChild(actionCell);
+            tableBody.appendChild(row);
+        });
+    }
+
+        // Menambahkan data ke table sesuai dengan section yang aktif
+        switch(sectionId) {
+        case 'contactSection':
+            fillTable('contactTableBody', contactData, ['name', 'email', 'phone', 'subject', 'message']);
+            break;
+        // Sections lainnya seperti meja, menu, order, customer tetap sama
+    }
+}
+
+    // Fungsi dummy untuk edit dan delete kontak
+    function editItem(id) {
+    console.log(`Edit item dengan id ${id}`);
+}
+
+    function deleteItem(id) {
+    console.log(`Delete item dengan id ${id}`);
+}
+
 
         // Fungsi dummy untuk edit dan delete
         function editItem(id) {

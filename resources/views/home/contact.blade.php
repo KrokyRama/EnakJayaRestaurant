@@ -8,7 +8,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <!-- title -->
-	<title>Check Out</title>
+	<title>Contact</title>
 
     <!-- favicon -->
     <link rel="shortcut icon" type="image/png" href="assets/img/favicon.png">
@@ -35,6 +35,8 @@
     <link rel="stylesheet" href="assets/css/socmed.css">
 
     <script src="https://kit.fontawesome.com/7b94ce0608.js" crossorigin="anonymous"></script>
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body>
@@ -74,12 +76,10 @@
                             <li>
                                 <div class="header-icons">
                                     <a class="shopping-cart" href="{{ url('/cart') }}"><i class="fas fa-shopping-cart"></i></a>
-                                    <a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
                                 </div>
                             </li>
                         </ul>
                     </nav>
-                    <a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
                     <div class="mobile-menu"></div>
                     <!-- menu end -->
                 </div>
@@ -134,7 +134,8 @@
                 </div>
                 <div id="form_status"></div>
                 <div class="contact-form">
-                    <form type="POST" id="fruitkha-contact" onSubmit="return valid_datas( this );">
+                    <form method="POST" id="fruitkha-contact" onSubmit="submitForm(event)">
+                        @csrf
                         <p>
                             <input type="text" placeholder="Nama" name="name" id="name">
                             <input type="email" placeholder="Email" name="email" id="email">
@@ -266,5 +267,39 @@
 <script src="assets/js/form-validate.js"></script>
 <!-- main js -->
 <script src="assets/js/main.js"></script>
+<script>
+function submitForm(event) {
+    event.preventDefault(); // Menghentikan pengiriman form default
+    const formData = new FormData(document.getElementById('fruitkha-contact'));
+
+    fetch('/contact', {  // Ganti dengan URL rute POST yang tepat
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            alert('Pesan berhasil disimpan');
+            // Tambahkan fungsi untuk memuat ulang data jika perlu
+            // loadData('contactSection'); 
+        } else {
+            alert('Terjadi kesalahan: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+        alert('Terjadi kesalahan saat mengirim pesan.');
+    });
+}
+</script>
+
 </body>
 </html>
