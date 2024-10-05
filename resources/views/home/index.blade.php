@@ -140,9 +140,12 @@
                         </div>
                         <h3>{{ $menu->nama_menu }}</h3>
                         <p class="product-price"><span>Per Pcs</span> Rp {{ number_format($menu->price, 0, ',', '.') }} </p>
-                        <a href="{{ url('cart', $menu->menu_id) }}" class="cart-btn">
-                            <i class="fas fa-shopping-cart"></i> Add to Cart
-                        </a>
+                        <form action="{{ route('addToCart') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="menu_id" value="{{ $menu->menu_id }}">
+                            <button type="submit" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                        </form>
+
                     </div>
                 </div>
             @endforeach

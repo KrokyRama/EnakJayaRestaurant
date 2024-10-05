@@ -137,11 +137,14 @@
                     <p class="single-product-pricing"><span>Per Pcs</span> Rp {{ number_format($product->price, 0, ',', '.') }}</p>
                     <p>{{ $product->description }}</p>
                     <div class="single-product-form">
-                        <form action="{{ url('cart', $product->menu_id) }}" method="POST">
+                        <form id="addToCartForm-{{ $product->menu_id }}" action="{{ route('addToCart') }}" method="POST">
                             @csrf
+                            <input type="hidden" name="menu_id" value="{{ $product->menu_id }}">
                             <input type="number" name="quantity" value="1" min="1">
-                            <button type="submit" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
                         </form>
+                        <a href="javascript:void(0);" class="cart-btn" onclick="document.getElementById('addToCartForm-{{ $product->menu_id }}').submit();">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </a>
                         <p><strong>Kategori:</strong> {{ $product->kategori }}</p>
                     </div>
                     <h4>Share:</h4>
@@ -183,6 +186,7 @@
                             <span>Per Pcs</span> Rp {{ number_format($menu->price, 0, ',', '.') }}
                         </p>
                         <a href="{{ url('cart') }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+
                     </div>
                 </div>
             @endforeach

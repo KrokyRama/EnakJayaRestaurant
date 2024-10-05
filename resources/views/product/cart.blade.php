@@ -96,30 +96,22 @@ section('content')
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="table-body-row">
-                            <td class="product-remove"><a href="#"><i class="far fa-window-close"></i></a></td>
-                            <td class="product-image"><img src="assets/img/products/nasigoreng.jpg" alt=""></td>
-                            <td class="product-name">Nasi Goreng</td>
-                            <td class="product-price">$85</td>
-                            <td class="product-quantity"><input type="number" placeholder="0"></td>
-                            <td class="product-total">1</td>
-                        </tr>
-                        <tr class="table-body-row">
-                            <td class="product-remove"><a href="#"><i class="far fa-window-close"></i></a></td>
-                            <td class="product-image"><img src="assets/img/products/esteh.jpg" alt=""></td>
-                            <td class="product-name">Es Teh</td>
-                            <td class="product-price">$80</td>
-                            <td class="product-quantity"><input type="number" placeholder="0"></td>
-                            <td class="product-total">1</td>
-                        </tr>
-                        <tr class="table-body-row">
-                            <td class="product-remove"><a href="#"><i class="far fa-window-close"></i></a></td>
-                            <td class="product-image"><img src="assets/img/products/tempemedoan.jpg" alt=""></td>
-                            <td class="product-name">Tempe Mendoan</td>
-                            <td class="product-price">$45</td>
-                            <td class="product-quantity"><input type="number" placeholder="0"></td>
-                            <td class="product-total">1</td>
-                        </tr>
+                        @foreach(session('cart') as $id => $details)
+                            <tr class="table-body-row">
+                                <td>
+                                    <form action="{{ route('remove.from.cart') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $id }}">
+                                        <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                                    </form>
+                                </td>
+                                <td class="product-image"><img src="{{ asset($details['photo']) }}" alt="{{ $details['name'] }}"></td>
+                                <td class="product-name">{{ $details['name'] }}</td>
+                                <td class="product-price">{{ number_format($details['price'], 0, ',', '.') }}</td>
+                                <td class="product-quantity">{{ $details['quantity'] }}</td>
+                                <td class="product-total">Rp {{ number_format($details['price'] * $details['quantity'], 0, ',', '.') }}</td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -137,15 +129,17 @@ section('content')
                         <tbody>
                         <tr class="total-data">
                             <td><strong>Subtotal: </strong></td>
-                            <td>$500</td>
+                            <td>Rp {{ number_format($subtotal, 0, ',', '.') }}</td>
                         </tr>
+                        @if($discountedAmount > 0)
                         <tr class="total-data">
-                            <td><strong>Shipping: </strong></td>
-                            <td>$45</td>
+                            <td><strong>Diskon: </strong></td>
+                            <td>Rp {{ number_format($discountedAmount, 0, ',', '.') }}</td>
                         </tr>
+                        @endif
                         <tr class="total-data">
                             <td><strong>Total: </strong></td>
-                            <td>$545</td>
+                            <td>Rp {{ number_format($total, 0, ',', '.') }}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -158,7 +152,8 @@ section('content')
                 <div class="coupon-section">
                     <h3>Apply Coupon</h3>
                     <div class="coupon-form-wrap">
-                        <form action="">
+                        <form action="{{ route('cart.discount') }}" method="POST">
+                            @csrf
                             <p><input type="text" placeholder="Coupon"></p>
                             <p><input type="submit" value="Apply"></p>
                         </form>
@@ -168,4 +163,6 @@ section('content')
         </div>
     </div>
 </div>
+
 <!-- end cart -->
+

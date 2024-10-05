@@ -107,26 +107,18 @@
                         </div>
                         <h3>{{ $menu->nama_menu }}</h3>
                         <p class="product-price"><span>Per Pcs</span> Rp {{ number_format($menu->price, 0, ',', '.') }} </p>
-                        <a href="{{ url('cart', $menu->menu_id) }}" class="cart-btn">
+                        <form id="addToCartForm-{{ $menu->menu_id }}" action="{{ route('addToCart') }}" method="POST" style="display: none;">
+                            @csrf
+                            <input type="hidden" name="menu_id" value="{{ $menu->menu_id }}">
+                        </form>
+
+                        <a href="javascript:void(0);" class="cart-btn" onclick="document.getElementById('addToCartForm-{{ $menu->menu_id }}').submit();">
                             <i class="fas fa-shopping-cart"></i> Add to Cart
                         </a>
+
                     </div>
                 </div>
             @endforeach
-        </div>
-
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <div class="pagination-wrap">
-                    <ul>
-                        <li><a href="#">Prev</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a class="active" href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">Next</a></li>
-                    </ul>
-                </div>
-            </div>
         </div>
     </div>
 </div>

@@ -26,4 +26,13 @@ Route::get('/contact', [HomeController::class, 'contact']);
 
 Route::get('/checkout', [ProductController::class, 'checkout'])->name('checkout');
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('singleProduct');
-Route::get('/cart', [ProductController::class, 'cart'])->name('cart');
+
+// CART
+// Route untuk menambahkan item ke cart
+Route::post('/cart', [ProductController::class, 'addToCart'])->name('addToCart');
+// Route untuk menampilkan halaman cart
+Route::get('/cart', [ProductController::class, 'showCart'])->name('cart');
+// Route untuk menghapus item dari cart
+Route::post('/remove-from-cart', [ProductController::class, 'removeFromCart'])->name('remove.from.cart');
+// Diskon
+Route::post('/cart/discount', [ProductController::class, 'applyDiscount'])->name('cart.discount');
