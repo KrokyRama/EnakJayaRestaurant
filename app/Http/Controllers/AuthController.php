@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -56,7 +57,10 @@ class AuthController extends Controller
                 'password' => Hash::make($request->password),
                 'role' => 'user',
             ]);
-
+            Customer::create([
+                'nama' => $request->name,
+                'email' => $request->email,
+            ]);
             return redirect()->route('login')->with('success', 'Registration successful, please log in.');
         } catch (\Exception $e) {
             // Log the error and redirect back
@@ -70,7 +74,8 @@ class AuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
+        // menghapus seluruh data session
+        $request->session()->flush();
         return redirect('/');
     }
 }

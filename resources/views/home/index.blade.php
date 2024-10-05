@@ -44,7 +44,7 @@
         </div>
     </div>
     <!--PreLoader Ends-->
-    
+
     <!-- header -->
 <div class="top-header-area" id="sticker">
     <div class="container">
@@ -213,8 +213,8 @@
                             <i class="fa-brands fa-tiktok"></i>
                         </a>
                     </div>
-                    
-                    
+
+
                 </div>
             </div>
         </div>
@@ -245,6 +245,22 @@
 <script src="assets/js/form-validate.js"></script>
 <!-- main js -->
 <script src="assets/js/main.js"></script>
+
+    @if(session('success'))
+        <div id="success-popup" class="popup">
+            <p>{{ session('success') }}</p>
+            <button onclick="closePopup()">Close</button>
+        </div>
+    @endif
+
+    <script>
+        function closePopup() {
+            document.getElementById('success-popup').style.display = 'none';
+        }
+
+        // Optionally, you can auto-close the popup after a few seconds
+        setTimeout(closePopup, 5000);
+    </script>
 </body>
 </html>
 

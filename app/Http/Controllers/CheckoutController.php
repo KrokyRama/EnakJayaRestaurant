@@ -4,60 +4,90 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use App\Models\Order;
+use App\Models\Payment;
 use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
-    public function checkout(Request $request)
+    // Method untuk menampilkan halaman checkout
+    public function showCheckout()
     {
-        // Validate the request (add any fields as required)
-        $request->validate([
-            'nama' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|email',
-            'nomor_telepon' => 'required|string|max:15',
-            'meja_id' => 'nullable|integer', // In case of dine-in
-        ]);
+        $cart = session()->get('cart', []);
+        $subtotal = 0;
+        $takeAwayFee = 3000; // Biaya takeaway tetap
+        $discount = session()->get('discount', 0);
+        $discountedAmount = 0;
 
-        // Check if the user is logged in
+        foreach ($cart as $item) {
+            $subtotal += $item['price'] * $item['quantity'];
+        }
+
+        if ($discount > 0) {
+            $discountedAmount = ($discount / 100) * $subtotal;
+        }
+
+        $total = $subtotal - $discountedAmount + $takeAwayFee;
+
+        return view('product.checkout', compact('cart', 'subtotal', 'discountedAmount', 'total'));
+    }
+
+    public function processCheckout(Request $request)
+    {
+        // Ambil data dari session cart
+        $cart = session()->get('cart', []);
+
+        // Jika cart kosong, kembalikan ke halaman shop
+        if (empty($cart)) {
+            return redirect('shop')->with('error', 'Your cart is empty!');
+        }
+
+        // Jika user login, gunakan data user
         if (Auth::check()) {
-            // If logged in, use the user details
-            $user = Auth::user();
+            $customer = Customer::where('email', Auth::user()->email)->first();;
         } else {
-            // If not logged in, create a new customer entry (guest checkout)
+            // Jika user tidak login (guest checkout)
             $customer = Customer::create([
-                'nama' => $request->nama,
-                'email' => $request->email,
-                'nomor_telepon' => $request->nomor_telepon,
-                'gender' => $request->gender, // Make sure to include gender if needed
+                'nama' => 'Guest',
+                'email' => null,
+                'nomor_telepon' => null,
+                'gender' => null,
             ]);
         }
 
-        // Create the order
+        // Save the order
         $order = Order::create([
-            'meja_id' => $request->meja_id, // Or null if takeaway
-            'customer_id' => $customer->customer_id ?? null, // Use guest's customer_id or null
+            'customer_id' => $customer->customer_id,
+            'meja_id' => $request->service_option === 'dinein' ? $request->table_option : null,
+            'jenis_pesanan' => $request->service_option,
+            'status_pesanan' => 0,
             'order_date' => now(),
-            'jenis_pesanan' => 'takeaway', // Or dine-in, based on your flow
-            'status_pesanan' => 'pending', // Set status as per your requirement
         ]);
 
-        // Store each cart item as order details
-        $cart = session()->get('cart', []);
-        foreach ($cart as $id => $item) {
+        // Save order details
+        foreach ($cart as $id => $details) {
             OrderDetail::create([
                 'order_id' => $order->order_id,
                 'menu_id' => $id,
-                'quantity' => $item['quantity'],
-                'price' => $item['price'],
+                'quantity' => $details['quantity'],
+                'price' => $details['price'],
             ]);
         }
 
-        // Clear the cart after checkout
-        session()->forget('cart');
+        // Save payment
+        $payment = Payment::create([
+            'order_id' => $order->order_id,
+            'metode_pembayaran' => $request->payment_option,
+            'status_pembayaran' => 0,
+            'payment_date' => now(),
+        ]);
 
-        // Redirect to confirmation page or thank you page
-        return redirect()->route('checkout.success')->with('success', 'Thank you for your order!');
+        // Kosongkan keranjang belanja setelah checkout
+        session()->forget('cart');
+        session()->forget('discount');
+
+        return redirect()->to('/')->with('success', 'Your order has been processed successfully!');
     }
+
 }

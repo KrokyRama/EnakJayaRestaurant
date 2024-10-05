@@ -44,7 +44,7 @@
         </div>
     </div>
     <!--PreLoader Ends-->
-    
+
     <div class="top-header-area" id="sticker">
     <div class="container">
         <div class="row">
@@ -121,66 +121,67 @@
 </div>
 <!-- end breadcrumb section -->
 
-<!-- check out section -->
-<div class="checkout-section mt-150 mb-150">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="checkout-accordion-wrap">
-                    <div class="accordion" id="accordionExample">
+    <!-- check out section -->
+    <div class="checkout-section mt-150 mb-150">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="checkout-accordion-wrap">
+                        <div class="accordion" id="accordionExample">
 
-                        <!-- Metode Pembayaran -->
-                        <div class="card single-accordion">
-                            <div class="card-header" id="headingOne">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        Metode Pembayaran
-                                    </button>
-                                </h5>
-                            </div>
+                            <!-- Metode Pembayaran -->
+                            <div class="card single-accordion">
+                                <div class="card-header" id="headingOne">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            Metode Pembayaran
+                                        </button>
+                                    </h5>
+                                </div>
 
-                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                <div class="card-body">
-                                    <div class="payment-method">
-                                        <form>
-                                            <p>
-                                                <input type="radio" id="cash" name="payment_option" value="cash">
-                                                <label for="cash">Cash</label>
-                                            </p>
-                                            <p>
-                                                <input type="radio" id="qris" name="payment_option" value="qris">
-                                                <label for="qris">QRIS (Cashless)</label>
-                                            </p>
-                                        </form>
+                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div class="payment-method">
+                                            <!-- Start of the form -->
+                                            <form action="{{ route('processCheckout') }}" method="POST">
+                                                @csrf
+                                                <p>
+                                                    <input type="radio" id="cash" name="payment_option" value="cash" required>
+                                                    <label for="cash">Cash</label>
+                                                </p>
+                                                <p>
+                                                    <input type="radio" id="qris" name="payment_option" value="qris" required>
+                                                    <label for="qris">QRIS (Cashless)</label>
+                                                </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Pilihan Layanan -->
-                        <div class="card single-accordion">
-                            <div class="card-header" id="headingThree">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                        Pilihan Layanan
-                                    </button>
-                                </h5>
-                            </div>
-                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                                <div class="card-body">
-                                    <div class="card-details">
-                                        <form>
+
+                            <!-- Pilihan Layanan -->
+                            <div class="card single-accordion">
+                                <div class="card-header" id="headingThree">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                            Pilihan Layanan
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div class="card-details">
                                             <p>
-                                                <input type="radio" id="dinein" name="service_option" value="dinein" onclick="showTableOptions()">
+                                                <input type="radio" id="dinein" name="service_option" value="dinein" onclick="showTableOptions()" required>
                                                 <label for="dinein">Dine In</label>
                                             </p>
                                             <p>
-                                                <input type="radio" id="takeaway" name="service_option" value="takeaway" onclick="hideTableOptions()">
+                                                <input type="radio" id="takeaway" name="service_option" value="takeaway" onclick="hideTableOptions()" required>
                                                 <label for="takeaway">Takeaway</label>
                                             </p>
                                             <div id="table-options" style="display: none;">
                                                 <p>Pilih Meja:</p>
-                                                <select>
+                                                <select name="table_option">
                                                     <option value="1">Meja 1</option>
                                                     <option value="2">Meja 2</option>
                                                     <option value="3">Meja 3</option>
@@ -189,65 +190,59 @@
                                                     <option value="6">Meja 6</option>
                                                 </select>
                                             </div>
-                                        </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Tombol Confirm -->
-                        <div class="confirm-button">
-                            <a href="#" class="boxed-btn">Confirm</a>
                         </div>
-
                     </div>
                 </div>
-            </div>
 
-            <div class="col-lg-4">
-                <div class="order-details-wrap">
-                    <table class="order-details">
-                        <thead>
-                        <tr>
-                            <th>Order Details</th>
-                            <th>Price</th>
-                        </tr>
-                        </thead>
-                        <tbody class="order-details-body">
-                        <tr>
-                            <td>Nasi Goreng</td>
-                            <td>$85.00</td>
-                        </tr>
-                        <tr>
-                            <td>Es Teh</td>
-                            <td>$80.00</td>
-                        </tr>
-                        <tr>
-                            <td>Tempe Mendoan</td>
-                            <td>$45.00</td>
-                        </tr>
-                        </tbody>
-                        <tbody class="checkout-details">
-                        <tr>
-                            <td>Subtotal</td>
-                            <td>$210</td>
-                        </tr>
-                        <tr>
-                            <td>Take Away</td>
-                            <td>$1</td>
-                        </tr>
-                        <tr>
-                            <td>Total</td>
-                            <td>$211</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <a href="#" class="boxed-btn">Place Order</a>
+                <div class="col-lg-4">
+                    <div class="order-details-wrap">
+                        <table class="order-details">
+                            <thead>
+                            <tr>
+                                <th>Order Details</th>
+                                <th>Price</th>
+                            </tr>
+                            </thead>
+                            <tbody class="order-details-body">
+                            @foreach(session('cart') as $id => $details)
+                                <tr>
+                                    <td>{{ $details['name'] }}</td>
+                                    <td>Rp {{ number_format($details['price'], 0, ',', '.') }}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                            <tbody class="checkout-details">
+                            <tr>
+                                <td>Subtotal</td>
+                                <td>Rp {{ number_format($subtotal, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr>
+                                <td>Take Away Fee</td>
+                                <td>+ Rp.3000</td>
+                            </tr>
+                            <tr>
+                                <td>Diskon</td>
+                                <td>- Rp.{{ number_format($discountedAmount, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr>
+                                <td>Total</td>
+                                <td>Rp {{ number_format($total, 0, ',', '.') }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!-- Place order button inside the form -->
+                        <button type="submit" class="boxed-btn">Place Order</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    </form>
 <!-- end check out section -->
 
 <!-- footer -->
@@ -296,13 +291,14 @@
                             <i class="fa-brands fa-tiktok"></i>
                         </a>
                     </div>
-                    
-                    
+
+
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <!-- end footer -->
 
 

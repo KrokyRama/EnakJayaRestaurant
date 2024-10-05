@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
 
 
@@ -42,3 +43,6 @@ Route::get('/admin/contacts', [ContactController::class, 'index'])->name('contac
 Route::post('/admin/contacts', [ContactController::class, 'store'])->name('contacts.store');
 Route::delete('/admin/contacts/{id}', [ContactController::class, 'destroy'])->name('contacts.destroy');
 Route::post('/contact', [ContactController::class, 'store'])->name('contacts.store');
+
+Route::get('/checkout', [CheckoutController::class, 'showCheckout'])->name('checkout');
+Route::post('/checkout', [CheckoutController::class, 'processCheckout'])->name('processCheckout');

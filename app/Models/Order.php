@@ -16,8 +16,8 @@ class Order extends Model
         'meja_id',
         'customer_id',
         'order_date',
-        'jenis_pesanan',
-        'status_pesanan'
+        'jenis_pesanan', // dine-in atau takeaway
+        'status_pesanan' // pending, completed, cancelled
     ];
 
     public function customer()
