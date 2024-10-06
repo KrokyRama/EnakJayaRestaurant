@@ -65,7 +65,6 @@ class ProductController extends Controller
         $cart = session()->get('cart', []);
         $subtotal = 0;
         $discount = session()->get('discount', 0);
-//        $discount = 10;
         $discountedAmount = 0;
 
         foreach ($cart as $item) {
@@ -98,7 +97,7 @@ class ProductController extends Controller
     // Menambahkan diskon
     public function applyDiscount(Request $request)
     {
-        $discount = 10; // contoh diskon 10%
+        $discount = 0; // contoh diskon 10%
         session()->put('discount', $discount);
 
         return redirect()->back()->with('success', 'Discount applied!');

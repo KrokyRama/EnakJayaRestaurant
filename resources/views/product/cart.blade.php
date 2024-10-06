@@ -44,7 +44,7 @@
         </div>
     </div>
     <!--PreLoader Ends-->
-    
+
     <div class="top-header-area" id="sticker">
     <div class="container">
         <div class="row">
@@ -74,6 +74,20 @@
                             <li>
                                 <div class="header-icons">
                                     <a class="shopping-cart" href="{{ url('cart') }}"><i class="fas fa-shopping-cart"></i></a>
+                                    @if (Auth::check())
+                                        <!-- Tombol Logout -->
+                                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            <i class="fa-solid fa-right-from-bracket"></i>
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            @csrf
+                                        </form>
+                                    @else
+                                        <!-- Tombol Login -->
+                                        <a href="{{ url('/login') }}">
+                                            <i class="fas fa-user"></i>
+                                        </a>
+                                    @endif
                                 </div>
                             </li>
                         </ul>
@@ -139,7 +153,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach(session('cart') as $id => $details)
+                        @forelse($cart as $id => $details)
                             <tr class="table-body-row">
                                 <td>
                                     <form action="{{ route('remove.from.cart') }}" method="POST">
@@ -154,7 +168,11 @@
                                 <td class="product-quantity">{{ $details['quantity'] }}</td>
                                 <td class="product-total">Rp {{ number_format($details['price'] * $details['quantity'], 0, ',', '.') }}</td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="6" class="text-center">Your cart is empty.</td>
+                            </tr>
+                        @endforelse
                         </tbody>
                     </table>
                 </div>
@@ -257,8 +275,8 @@
                             <i class="fa-brands fa-tiktok"></i>
                         </a>
                     </div>
-                    
-                    
+
+
                 </div>
             </div>
         </div>
@@ -289,6 +307,7 @@
 <script src="assets/js/form-validate.js"></script>
 <!-- main js -->
 <script src="assets/js/main.js"></script>
+
 </body>
 </html>
 

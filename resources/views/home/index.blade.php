@@ -75,7 +75,20 @@
                             <li>
                                 <div class="header-icons">
                                     <a class="shopping-cart" href="{{ url('/cart') }}"><i class="fas fa-shopping-cart"></i></a>
-                                    <a href="{{ url('/login') }}"><i class="fas fa-user"></i></a>
+                                    @if (Auth::check())
+                                        <!-- Tombol Logout -->
+                                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            <i class="fa-solid fa-right-from-bracket"></i>
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            @csrf
+                                        </form>
+                                    @else
+                                        <!-- Tombol Login -->
+                                        <a href="{{ url('/login') }}">
+                                            <i class="fas fa-user"></i>
+                                        </a>
+                                    @endif
                                 </div>
                             </li>
                         </ul>

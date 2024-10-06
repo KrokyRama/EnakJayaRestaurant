@@ -37,6 +37,7 @@
 </head>
 
 <body>
+@if(session('cart') && count(session('cart')) > 0)
     <!--PreLoader-->
     <div class="loader">
         <div class="loader-inner">
@@ -74,6 +75,20 @@
                             <li>
                                 <div class="header-icons">
                                     <a class="shopping-cart" href="{{ url('cart') }}"><i class="fas fa-shopping-cart"></i></a>
+                                    @if (Auth::check())
+                                        <!-- Tombol Logout -->
+                                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            <i class="fa-solid fa-right-from-bracket"></i>
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            @csrf
+                                        </form>
+                                    @else
+                                        <!-- Tombol Login -->
+                                        <a href="{{ url('/login') }}">
+                                            <i class="fas fa-user"></i>
+                                        </a>
+                                    @endif
                                 </div>
                             </li>
                         </ul>
@@ -138,12 +153,11 @@
                                         </button>
                                     </h5>
                                 </div>
-
                                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                                     <div class="card-body">
                                         <div class="payment-method">
                                             <!-- Start of the form -->
-                                            <form action="{{ route('processCheckout') }}" method="POST">
+                                            <form id="checkout-form" action="{{ route('processCheckout') }}" method="POST">
                                                 @csrf
                                                 <p>
                                                     <input type="radio" id="cash" name="payment_option" value="cash" required>
@@ -172,11 +186,11 @@
                                     <div class="card-body">
                                         <div class="card-details">
                                             <p>
-                                                <input type="radio" id="dinein" name="service_option" value="dinein" onclick="showTableOptions()" required>
+                                                <input type="radio" id="dinein" name="service_option" value="dinein" onclick="updateServiceOption('dinein')" required>
                                                 <label for="dinein">Dine In</label>
                                             </p>
                                             <p>
-                                                <input type="radio" id="takeaway" name="service_option" value="takeaway" onclick="hideTableOptions()" required>
+                                                <input type="radio" id="takeaway" name="service_option" value="takeaway" onclick="updateServiceOption('takeaway')" required>
                                                 <label for="takeaway">Takeaway</label>
                                             </p>
                                             <div id="table-options" style="display: none;">
@@ -221,14 +235,16 @@
                                 <td>Subtotal</td>
                                 <td>Rp {{ number_format($subtotal, 0, ',', '.') }}</td>
                             </tr>
-                            <tr>
+                            <tr id="takeaway-fee-row" style="display: none;">
                                 <td>Take Away Fee</td>
                                 <td>+ Rp.3000</td>
                             </tr>
-                            <tr>
-                                <td>Diskon</td>
-                                <td>- Rp.{{ number_format($discountedAmount, 0, ',', '.') }}</td>
-                            </tr>
+                            @if($discountedAmount > 0)
+                                <tr>
+                                    <td>Diskon</td>
+                                    <td>- Rp.{{ number_format($discountedAmount, 0, ',', '.') }}</td>
+                                </tr>
+                            @endif
                             <tr>
                                 <td>Total</td>
                                 <td>Rp {{ number_format($total, 0, ',', '.') }}</td>
@@ -236,7 +252,7 @@
                             </tbody>
                         </table>
                         <!-- Place order button inside the form -->
-                        <button type="submit" class="boxed-btn">Place Order</button>
+                        <a href="#" class="boxed-btn" onclick="event.preventDefault(); document.getElementById('checkout-form').submit();">Place Order</a>
                     </div>
                 </div>
             </div>
@@ -324,6 +340,54 @@
 <script src="assets/js/form-validate.js"></script>
 <!-- main js -->
 <script src="assets/js/main.js"></script>
+@else
+    <div class="container mt-5 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <div class="alert alert-warning" role="alert">
+                    <h4 class="alert-heading">Cart Kosong!</h4>
+                    <p>Sepertinya cart mu kosong, lanjutkan belanja untuk mengisinya!</p>
+                    <hr>
+                    <a href="{{ url('shop') }}" class="btn btn-primary">Go To Shop</a>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
+{{--menambahkan takeaway fee --}}
+<script>
+    function updateServiceOption(option) {
+        // Untuk Takeaway, sembunyikan opsi meja dan tampilkan biaya Takeaway
+        if (option === 'takeaway') {
+            hideTableOptions();
+            document.getElementById('takeaway-fee-row').style.display = 'table-row';
+            updateTotalPrice(3000);  // Tambahkan biaya takeaway ke total
+        } else if (option === 'dinein') {
+            // Untuk Dine In, tampilkan opsi meja dan sembunyikan biaya Takeaway
+            showTableOptions();
+            document.getElementById('takeaway-fee-row').style.display = 'none';
+            updateTotalPrice(0);  // Tidak ada biaya takeaway
+        }
+    }
+
+    function showTableOptions() {
+        document.getElementById("table-options").style.display = "block";
+    }
+
+    function hideTableOptions() {
+        document.getElementById("table-options").style.display = "none";
+    }
+
+    function updateTotalPrice(takeawayFee) {
+        const subtotal = {{ $subtotal }};
+        const discount = {{ $discountedAmount }};
+        const total = subtotal - discount + takeawayFee;
+
+        // Perbarui total di halaman
+        document.getElementById('total-price').innerText = 'Rp ' + total.toLocaleString('id-ID');
+    }
+</script>
 </body>
 </html>
 

@@ -10,6 +10,7 @@ use App\Http\Controllers\ContactController;
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/admin', [HomeController::class, 'admin'])->name('admin');
+Route::get('/member', [HomeController::class, 'member'])->name('member');
 
 
 Route::middleware('guest')->group(function () {
@@ -22,7 +23,7 @@ Route::middleware('guest')->group(function () {
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 
-Route::get('/shop', [HomeController::class, 'shop']);
+Route::get('/shop', [HomeController::class, 'shop'])->name('shop');
 
 Route::get('/contact', [HomeController::class, 'contact']);
 
@@ -46,3 +47,5 @@ Route::post('/contact', [ContactController::class, 'store'])->name('contacts.sto
 
 Route::get('/checkout', [CheckoutController::class, 'showCheckout'])->name('checkout');
 Route::post('/checkout', [CheckoutController::class, 'processCheckout'])->name('processCheckout');
+
+Route::get('/membercoba', [HomeController::class, 'membercoba'])->name('membercoba');

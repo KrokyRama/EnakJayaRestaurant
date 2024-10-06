@@ -171,10 +171,4 @@
 
 
 }(jQuery));
-function showTableOptions() {
-    document.getElementById("table-options").style.display = "block";
-}
 
-function hideTableOptions() {
-    document.getElementById("table-options").style.display = "none";
-}

@@ -32,4 +32,13 @@ class HomeController extends Controller
         return view('admin');
     }
 
+    public function member()
+    {
+        return view('member');
+    }
+
+    public function membercoba()
+    {
+        return view('cobamember');
+    }
 }
