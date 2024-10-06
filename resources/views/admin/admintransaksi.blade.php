@@ -4,9 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Transaksi</title>
+    <link rel="stylesheet" href="assets/css/styleadmin.css">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/img/LOGOS.png">
     <style>
-        /* Tambahkan style sesuai kebutuhan */
+        /* Style for the table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 18px;
+            text-align: left;
+        }
+
+        table thead {
+            background-color: #f2f2f2;
+        }
+
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+        }
+
+        table th {
+            background-color: #07212e;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .container {
+            margin: 20px;
+        }
     </style>
 </head>
 <body>
@@ -49,8 +83,8 @@
                         <td>{{ $order->meja_id }}</td>
                         <td>{{ $order->jenis_pesanan }}</td>
                         <td>{{ $order->payment->metode_pembayaran }}</td>
-                        <td>{{ $order->payment->status_pembayaran }}</td>
-                        <td>{{ $order->status_pesanan }}</td>
+                        <td>{{ $order->payment->status_pembayaran == 1 ? 'Lunas' : 'Belum Lunas' }}</td>
+                        <td>{{ $order->status_pesanan == 1 ? 'Selesai' : 'Belum Selesai' }}</td>
                         <td>
                             <a href="{{ route('transaksi.edit', $order->order_id) }}">Edit</a>
                         </td>
