@@ -247,7 +247,7 @@
                             @endif
                             <tr>
                                 <td>Total</td>
-                                <td>Rp {{ number_format($total, 0, ',', '.') }}</td>
+                                <td id='total-price'>Rp {{ number_format($total, 0, ',', '.') }}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -380,8 +380,8 @@
     }
 
     function updateTotalPrice(takeawayFee) {
-        const subtotal = {{ $subtotal }};
-        const discount = {{ $discountedAmount }};
+        const subtotal = {{ ($subtotal) }};
+        const discount = {{ ($discountedAmount) }};
         const total = subtotal - discount + takeawayFee;
 
         // Perbarui total di halaman

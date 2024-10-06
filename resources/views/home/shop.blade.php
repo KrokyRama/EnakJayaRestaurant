@@ -162,7 +162,7 @@
                             </a>
                         </div>
                         <h3>{{ $menu->nama_menu }}</h3>
-                        <p class="product-price"><span>Per Pcs</span> Rp {{ number_format($menu->price, 0, ',', '.') }} </p>
+                        <p class="product-price"><span>Per Porsi</span> Rp {{ number_format($menu->price, 0, ',', '.') }} </p>
                         <form id="addToCartForm-{{ $menu->menu_id }}" action="{{ route('addToCart') }}" method="POST" style="display: none;">
                             @csrf
                             <input type="hidden" name="menu_id" value="{{ $menu->menu_id }}">

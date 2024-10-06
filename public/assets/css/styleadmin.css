@@ -1,0 +1,55 @@
+body{
+    font-family: "Open Sans", sans-serif;
+    font-size: 1em;
+    margin: 0px;
+}
+main{
+    margin: 20px;
+}
+h1{
+    text-align: center;
+    background-color: #07212e;
+    opacity: 0.8;
+    color: white;
+    padding: 30px;
+    margin: 0px;
+}
+p{
+    text-align: justify;
+}
+.navbar ul{
+    list-style-type: none;
+    background-color: #07212e;
+    opacity: 0.7;
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+}
+.navbar a{
+    color: white;
+    text-decoration: none;
+    padding: 15px;
+    display: block;
+    text-align: center;
+}
+.navbar a:hover{
+    background-color: #04131b;
+}
+.navbar li{
+    float: left;
+}
+.project{
+    text-decoration: none;
+    color: black;
+}
+.project:hover{
+    text-decoration: none;
+    color: hsla(343, 100%, 50%, 0.853);
+}
+.icons{
+    text-align: left;
+}
+.icons a{
+    text-decoration: none;
+    margin-right: 20px;
+}

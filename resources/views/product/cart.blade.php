@@ -205,7 +205,6 @@
                         </tbody>
                     </table>
                     <div class="cart-buttons">
-                        <a href="" class="boxed-btn">Update Cart</a>
                         <a href="{{ url('checkout') }}" class="boxed-btn black">Check Out</a>
                     </div>
                 </div>
