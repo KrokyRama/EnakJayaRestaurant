@@ -56,9 +56,12 @@
                 <li><a href="/adminmeja">Data Meja</a></li>
                 <li>
                     <div class="button-container">
-                        <a href="{{ url('/') }}" class="button" id="logoutBtn">
-                            <i class="fa-solid fa-right-from-bracket"></i> Logout
+                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="button" id="logoutBtn" title="Logout">
+                            <i class="fas fa-sign-out-alt"></i> Logout
                         </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </div>
                 </li>
             </ul>
