@@ -41,6 +41,13 @@
         .container {
             margin: 20px;
         }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 0px;
+        }
     </style>
 </head>
 <body>
@@ -54,8 +61,16 @@
                 <li><a href="/adminsaran">Data Saran dan Keluhan</a></li>
                 <li><a href="/adminmenu">Data Menu</a></li>
                 <li><a href="/adminmeja">Data Meja</a></li>
+                <li>
+                    <div class="button-container">
+                        <a href="{{ url('/') }}" class="button" id="logoutBtn">
+                            <i class="fa-solid fa-right-from-bracket"></i> Logout
+                        </a>
+                    </div>
+                </li>
             </ul>
         </nav>
+
     </header>
 
     <div class="container">
@@ -108,5 +123,6 @@
             </tbody>
         </table>
     </div>
+
 </body>
 </html>

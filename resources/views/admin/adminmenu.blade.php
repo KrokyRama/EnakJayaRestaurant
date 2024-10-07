@@ -82,6 +82,13 @@
                 <li><a href="/adminsaran">Data Saran dan Keluhan</a></li>
                 <li><a href="/adminmenu">Data Menu</a></li>
                 <li><a href="/adminmeja">Data Meja</a></li>
+                <li>
+                    <div class="button-container">
+                        <a href="{{ url('/') }}" class="button" id="logoutBtn">
+                            <i class="fa-solid fa-right-from-bracket"></i> Logout
+                        </a>
+                    </div>
+                </li>
             </ul>
         </nav>
     </header>
