@@ -32,6 +32,14 @@
     <link rel="stylesheet" href="assets/css/responsive.css">
     <!-- socmed -->
     <link rel="stylesheet" href="assets/css/socmed.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 
     <script src="https://kit.fontawesome.com/7b94ce0608.js" crossorigin="anonymous"></script>
 </head>
@@ -166,16 +174,18 @@
                             </a>
                         </div>
                         <h3>{{ $menu->nama_menu }}</h3>
-                        <p class="product-price"><span>Per Pcs</span> Rp {{ number_format($menu->price, 0, ',', '.') }} </p>
+                        <p class="product-price"><span>Per Porsi</span> Rp {{ number_format($menu->price, 0, ',', '.') }} </p>
+                        @if($menu->stok > 0)
                         <form id="addToCartForm-{{ $menu->menu_id }}" action="{{ route('addToCart') }}" method="POST" style="display: none;">
                             @csrf
                             <input type="hidden" name="menu_id" value="{{ $menu->menu_id }}">
                         </form>
-
                         <a href="javascript:void(0);" class="cart-btn" onclick="document.getElementById('addToCartForm-{{ $menu->menu_id }}').submit();">
                             <i class="fas fa-shopping-cart"></i> Add to Cart
                         </a>
-
+                        @else
+                            <p class="product-stock">Stock: Habis</p>
+                        @endif
                     </div>
                 </div>
             @endforeach
@@ -262,6 +272,35 @@
 <script src="assets/js/form-validate.js"></script>
 <!-- main js -->
 <script src="assets/js/main.js"></script>
+
+    {{--popup jika melebihi stok--}}
+    <!-- Modal for errorstok message -->
+    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{ session('errorstok') }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (session('errorstok'))
+        <script>
+            $(document).ready(function() {
+                $('#errorModal').modal('show');
+            });
+        </script>
+    @endif
 </body>
 </html>
 

@@ -41,8 +41,17 @@ class ProductController extends Controller
 
         $quantity = $request->quantity ?? 1;
 
+        // Cek apakah stok mencukupi
+        if ($quantity > $product->stok) {
+            return redirect()->back()->with('errorstok', 'Jumlah pembelian melebihi stok yang tersedia!');
+        }
+
         // Jika item sudah ada di cart, maka tambahkan quantity
         if (isset($cart[$request->menu_id])) {
+         $totalquantity = $cart[$request->menu_id]['quantity'] + $quantity;
+            if ($totalquantity > $product->stok) {
+                return redirect()->back()->with('errorstok', 'Jumlah pembelian melebihi stok yang tersedia!');
+            }
             $cart[$request->menu_id]['quantity'] += $quantity;
         } else {
             // Menambahkan item ke cart
