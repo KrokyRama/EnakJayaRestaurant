@@ -25,12 +25,7 @@
             background-color: var(--background-color);
             color: var(--text-color);
         }
-        .button-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 30px;
-        }
+
         .container {
             width: 90%;
             max-width: 1200px;
@@ -47,7 +42,7 @@
         }
 
         .header h1 {
-            padding-top: 1px;
+            margin: 0;
             font-size: 2.5em;
         }
 
@@ -59,15 +54,11 @@
 
         /* Welcome Back Accent */
         .welcome-message {
-            position: absolute;
-            top: 10px;
-            left: 20px;
-            background-color: var(--success-color);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 1em;
+            text-align: center;
+            font-size: 1.2em;
             font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
         }
 
         .section {
@@ -118,13 +109,13 @@
         }
 
         .input {
-            width: 100%;
-            padding: 10px;
+            width: 100%; 
+            padding: 10px; 
             background-color: #ffffff;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-            font-size: 16px;
+            border: 1px solid #ccc; 
+            border-radius: 5px; 
+            box-sizing: border-box; 
+            font-size: 16px; 
             color: #555555;
         }
 
@@ -350,7 +341,7 @@
         .voucher-item.used {
             background-color: #f4f4f4;
             color: #999;
- text-decoration: line-through;
+            text-decoration: line-through;
         }
         .voucher-item button {
             margin-top: 5px;
@@ -403,17 +394,17 @@
             margin: 0;
             font-size: 16px;
         }
-
+        
         .button-container {
             display: flex;
             justify-content: center;
             gap: 20px;
-            margin-top: 0px;
+            margin-top: 30px;
         }
 
-        button {
+        .button {
             padding: 10px 20px;
-            background-color: transparent;
+            background-color: #2a9d8f;
             color: white;
             text-decoration: none;
             border: none;
@@ -421,15 +412,14 @@
             font-size: 18px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            margin-top: 10px;
-            display: flex;
-            justify-content: flex-end;
-            margin-left: 1020px;
-
         }
 
         .button:hover {
-            background-color: var(--secondary-color);
+            background-color: #45a049;
+        }
+
+        .button i {
+            margin-right: 10px;
         }
 
     </style>
@@ -439,15 +429,6 @@
     <div class="header">
         <h1>Dashboard</h1>
         <p>Enak Jaya Restaurant</p>
-
-        <div class="button-container">
-            <form action="{{ route('logout') }}" method="POST" id="logoutForm">
-                @csrf
-                <button type="submit" class="button" id="logoutBtn">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </button>
-            </form>
-        </div>
         <!-- Welcome Back Message -->
 {{--        <div class="welcome-message" id="welcomeMessage" style="left: 50%; transform: translateX(-50%);">Welcome Back, John Doe!</div>--}}
     </div>
@@ -642,6 +623,18 @@
         </div>
     </div>
 
+    <!-- Back to Home section -->
+    <div class="button-container">
+        <a href="{{ url('/') }}" class="button" id="backHomeBtn">
+            <i class="fas fa-home"></i> Back to Home!
+        </a>
+        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="button" id="logoutBtn" title="Logout">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+    </div>
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
