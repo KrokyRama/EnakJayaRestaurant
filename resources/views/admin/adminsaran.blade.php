@@ -50,6 +50,7 @@
         <nav class="navbar">
             <ul>
                 <li><a href="/admintransaksi">Data Transaksi</a></li>
+                <li><a href="/adminorderdetail">Data Detail Transaksi</a></li>
                 <li><a href="/adminpelanggan">Data Pelanggan</a></li>
                 <li><a href="/adminsaran">Data Saran dan Keluhan</a></li>
                 <li><a href="/adminmenu">Data Menu</a></li>

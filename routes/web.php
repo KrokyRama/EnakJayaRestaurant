@@ -11,7 +11,7 @@ use App\Http\Controllers\TableController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\MemberController;
-
+use App\Http\Controllers\OrderDetailController;
 
 
 Route::get('/', [HomeController::class, 'index']);
@@ -89,3 +89,5 @@ Route::get('/admintransaksi', [OrderController::class, 'index'])->name('transaks
 Route::get('/admintransaksi/{id}/edit', [OrderController::class, 'edit'])->name('transaksi.edit');
 // Route untuk memperbarui transaksi
 Route::put('/admintransaksi/{id}', [OrderController::class, 'update'])->name('transaksi.update');
+
+Route::get('/adminorderdetail', [OrderDetailController::class, 'index'])->name('adminorderdetail.index');

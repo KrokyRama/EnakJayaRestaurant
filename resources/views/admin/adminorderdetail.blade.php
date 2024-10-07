@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Pelanggan</title>
+    <title>Detail Order</title>
     <link rel="stylesheet" href="assets/css/styleadmin.css">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/img/LOGOS.png">
     <style>
@@ -41,6 +41,13 @@
         .container {
             margin: 20px;
         }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 0px;
+        }
     </style>
 </head>
 <body>
@@ -68,25 +75,23 @@
 
     <!-- Container for the table -->
     <div class="container">
-        <h2>Data Pelanggan</h2>
-        <table id="customerTable">
+        <h2>Detail Order</h2>
+        <table id="detailOrderTable">
             <thead>
                 <tr>
-                    <th>Id Pelanggan</th>
-                    <th>Nama</th>
-                    <th>Email</th>
-                    <th>No Telepon</th>
-                    <th>Jenis Kelamin</th>
+                    <th>Id Detail Order</th>
+                    <th>Nomor Transaksi</th>
+                    <th>Nama Menu</th>
+                    <th>Jumlah</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($customers as $customer)
+                @foreach ($orderDetails as $detail)
                     <tr>
-                        <td>{{ $customer->customer_id }}</td>
-                        <td>{{ $customer->nama }}</td>
-                        <td>{{ $customer->email }}</td>
-                        <td>{{ $customer->nomor_telepon }}</td>
-                        <td>{{ $customer->gender == 1 ? 'Pria' : 'Wanita' }}</td>
+                        <td>{{ $detail->order_detail_id }}</td> <!-- Pastikan ini sesuai dengan primary key -->
+                        <td>{{ $detail->order_id }}</td>
+                        <td>{{ $detail->menu->nama_menu }}</td> <!-- Ambil nama menu dari relasi -->
+                        <td>{{ $detail->quantity }}</td> <!-- Ganti 'jumlah' dengan 'quantity' sesuai model -->
                     </tr>
                 @endforeach
             </tbody>
