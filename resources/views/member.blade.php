@@ -47,7 +47,7 @@
         }
 
         .header h1 {
-            margin: 0;
+            padding-top: 1px;
             font-size: 2.5em;
         }
 
@@ -403,6 +403,35 @@
             margin: 0;
             font-size: 16px;
         }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 0px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: transparent;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+            display: flex;
+            justify-content: flex-end;
+            margin-left: 1020px;
+
+        }
+
+        .button:hover {
+            background-color: var(--secondary-color);
+        }
+
     </style>
 
 </head>
@@ -410,20 +439,17 @@
     <div class="header">
         <h1>Dashboard</h1>
         <p>Enak Jaya Restaurant</p>
+
+        <div class="button-container">
+            <form action="{{ route('logout') }}" method="POST" id="logoutForm">
+                @csrf
+                <button type="submit" class="button" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </form>
+        </div>
         <!-- Welcome Back Message -->
 {{--        <div class="welcome-message" id="welcomeMessage" style="left: 50%; transform: translateX(-50%);">Welcome Back, John Doe!</div>--}}
-    </div>
-    <!-- Back to Home section -->
-    <div class="button-container">
-        <a href="{{ url('/') }}" class="button" id="backHomeBtn">
-            <i class="fas fa-home"></i>Back to Home
-        </a>
-        <form action="{{ route('logout') }}" method="POST" id="logoutForm">
-            @csrf
-            <button type="submit" class="button" id="logoutBtn">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </button>
-        </form>
     </div>
 
     <div class="container">
