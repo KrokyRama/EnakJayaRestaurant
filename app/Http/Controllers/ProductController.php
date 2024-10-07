@@ -1,8 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Customer;
 use App\Models\Menu;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Voucher;
 
 class ProductController extends Controller
 {
@@ -73,21 +76,26 @@ class ProductController extends Controller
     {
         $cart = session()->get('cart', []);
         $subtotal = 0;
-        $discount = session()->get('discount', 0);
-        $discountedAmount = 0;
 
         foreach ($cart as $item) {
             $subtotal += $item['price'] * $item['quantity'];
         }
 
-        if ($discount > 0) {
-            $discountedAmount = ($discount / 100) * $subtotal;
+        // Cek apakah ada voucher yang digunakan dan simpan diskon di session
+        $discountedAmount = 0;
+        if (session()->has('voucher')) {
+            $voucher = session()->get('voucher');
+            $discountedAmount = ($voucher['diskon'] / 100) * $subtotal; // Menghitung diskon berdasarkan persentase
         }
 
+        // Total setelah diskon
         $total = $subtotal - $discountedAmount;
 
         return view('product.cart', compact('cart', 'subtotal', 'discountedAmount', 'total'));
     }
+
+
+
 
 
     // hapus item dari cart
@@ -104,15 +112,38 @@ class ProductController extends Controller
     }
 
     // Menambahkan diskon
-    public function applyDiscount(Request $request)
+    public function applyVoucher(Request $request)
     {
-        $discount = 0; // contoh diskon 10%
-        session()->put('discount', $discount);
+        // Ambil kode voucher dari input
+        $voucherCode = $request->input('voucher_code');
 
-        return redirect()->back()->with('success', 'Discount applied!');
+        // Cari voucher di database
+        $voucher = Voucher::where('voucher_code', $voucherCode)->first();
+
+        // Cek apakah voucher valid
+        if (!$voucher) {
+            return redirect()->back()->with('error', 'Kode voucher tidak valid.');
+        }
+
+        // Cek apakah voucher masih berlaku
+        if ($voucher->status !== 'aktif' || $voucher->tanggal_berlaku > now() || $voucher->tanggal_kadaluarsa < now()) {
+            return redirect()->back()->with('error', 'Voucher sudah kedaluwarsa atau belum berlaku.');
+        }
+
+        // Cek apakah voucher hanya bisa digunakan oleh customer tertentu berdasarkan email
+        $customer = Customer::where('email', Auth::user()->email)->firstOrFail();
+
+        if ($voucher->customer_id !== null && $voucher->customer_id !== $customer->id) {
+            return redirect()->back()->with('error', 'Voucher tidak dapat digunakan oleh akun ini.');
+        }
+
+        // Simpan diskon di session agar bisa digunakan di checkout
+        session()->put('voucher', [
+            'kode' => $voucher->voucher_code,
+            'diskon' => $voucher->discount,  // Misal diskon dalam persen atau jumlah tertentu
+        ]);
+        return redirect()->back()->with('success', 'Voucher berhasil diterapkan!');
     }
-
-
 
 
 }

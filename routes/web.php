@@ -46,12 +46,13 @@ Route::get('/cart', [ProductController::class, 'showCart'])->name('cart');
 // Route untuk menghapus item dari cart
 Route::post('/remove-from-cart', [ProductController::class, 'removeFromCart'])->name('remove.from.cart');
 // Diskon
-Route::post('/cart/discount', [ProductController::class, 'applyDiscount'])->name('cart.discount');
+//Route::post('/cart/discount', [ProductController::class, 'applyDiscount'])->name('cart.discount');
 
 // Route::get('/contact', [ContactController::class, 'index']);
 Route::post('/contact', [ContactController::class, 'store'])->name('contacts.store');
 
 Route::get('/checkout', [CheckoutController::class, 'showCheckout'])->name('checkout');
+Route::post('/apply-voucher', [ProductController::class, 'applyVoucher'])->name('applyVoucher');
 Route::post('/checkout', [CheckoutController::class, 'processCheckout'])->name('processCheckout');
 
 

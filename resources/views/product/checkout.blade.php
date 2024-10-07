@@ -251,7 +251,7 @@
                             @endif
                             <tr>
                                 <td>Total</td>
-                                <td>Rp {{ number_format($total, 0, ',', '.') }}</td>
+                                <td id="total-price">Rp {{ number_format($total, 0, ',', '.') }}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -383,7 +383,7 @@
         document.getElementById("table-options").style.display = "none";
     }
 
-    function updateTotalPrice(takeawayFee) {
+    function updateTotalPrice(takeawayFee = 0) {
         const subtotal = {{ $subtotal }};
         const discount = {{ $discountedAmount }};
         const total = subtotal - discount + takeawayFee;
@@ -392,6 +392,7 @@
         document.getElementById('total-price').innerText = 'Rp ' + total.toLocaleString('id-ID');
     }
 </script>
+
 </body>
 </html>
 

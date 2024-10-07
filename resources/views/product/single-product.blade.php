@@ -155,8 +155,9 @@
             <div class="col-md-7">
                 <div class="single-product-content">
                     <h3>{{ $product->nama_menu }}</h3>
-                    <p class="single-product-pricing"><span>Per Pcs</span> Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                    <p class="single-product-pricing"><span>Per Porsi</span> Rp {{ number_format($product->price, 0, ',', '.') }}</p>
                     <p>{{ $product->description }}</p>
+                    @if($product->stok > 0)
                     <div class="single-product-form">
                         <form id="addToCartForm-{{ $product->menu_id }}" action="{{ route('addToCart') }}" method="POST">
                             @csrf
@@ -166,15 +167,11 @@
                         <a href="javascript:void(0);" class="cart-btn" onclick="document.getElementById('addToCartForm-{{ $product->menu_id }}').submit();">
                             <i class="fas fa-shopping-cart"></i> Add to Cart
                         </a>
+                        @else
+                            <p class="product-stock">Stock: Habis</p>
+                        @endif
                         <p><strong>Kategori:</strong> {{ $product->kategori }}</p>
                     </div>
-                    <h4>Share:</h4>
-                    <ul class="product-share">
-                        <li><a href=""><i class="fab fa-facebook-f"></i></a></li>
-                        <li><a href=""><i class="fab fa-twitter"></i></a></li>
-                        <li><a href=""><i class="fab fa-google-plus-g"></i></a></li>
-                        <li><a href=""><i class="fab fa-linkedin"></i></a></li>
-                    </ul>
                 </div>
             </div>
         </div>
@@ -204,10 +201,20 @@
                         </div>
                         <h3>{{ $menu->nama_menu }}</h3>
                         <p class="product-price">
-                            <span>Per Pcs</span> Rp {{ number_format($menu->price, 0, ',', '.') }}
+                            <span>Per Porsi</span> Rp {{ number_format($menu->price, 0, ',', '.') }}
                         </p>
-                        <a href="{{ url('cart') }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-
+                        @if($menu->stok > 0)
+                        <a href="javascript:void(0);" class="cart-btn" onclick="document.getElementById('addToCartForm-{{ $menu->menu_id }}').submit();">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </a>
+                        <form id="addToCartForm-{{ $menu->menu_id }}" action="{{ route('addToCart') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="menu_id" value="{{ $menu->menu_id }}">
+                            <input type="hidden" name="quantity" value="1">
+                        </form>
+                        @else
+                            <p class="product-stock">Stock: Habis</p>
+                        @endif
                     </div>
                 </div>
             @endforeach

@@ -217,11 +217,18 @@
                 <div class="coupon-section">
                     <h3>Apply Coupon</h3>
                     <div class="coupon-form-wrap">
-                        <form action="{{ route('cart.discount') }}" method="POST">
+                        <form action="{{ route('applyVoucher') }}" method="POST">
                             @csrf
-                            <p><input type="text" placeholder="Coupon"></p>
+                            <p><input type="text" name="voucher_code" placeholder="Masukkan Kode Voucher!"></p>
                             <p><input type="submit" value="Apply"></p>
                         </form>
+                        @if(session('voucher'))
+                            <div class="voucher-section">
+                                <h3>Voucher Applied</h3>
+                                <p><strong>Code:</strong> {{ session('voucher')['kode'] }}</p>
+                                <p><strong>Discount:</strong> {{ session('voucher')['diskon'] }}%</p>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
