@@ -160,6 +160,13 @@
                         </a>
                         <p><strong>Kategori:</strong> {{ $product->kategori }}</p>
                     </div>
+                    <h4>Share:</h4>
+                    <ul class="product-share">
+                        <li><a href=""><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href=""><i class="fab fa-twitter"></i></a></li>
+                        <li><a href=""><i class="fab fa-google-plus-g"></i></a></li>
+                        <li><a href=""><i class="fab fa-linkedin"></i></a></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -191,14 +198,8 @@
                         <p class="product-price">
                             <span>Per Pcs</span> Rp {{ number_format($menu->price, 0, ',', '.') }}
                         </p>
-                        <a href="javascript:void(0);" class="cart-btn" onclick="document.getElementById('addToCartForm-{{ $menu->menu_id }}').submit();">
-                            <i class="fas fa-shopping-cart"></i> Add to Cart
-                        </a>
-                        <form id="addToCartForm-{{ $menu->menu_id }}" action="{{ route('addToCart') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="menu_id" value="{{ $menu->menu_id }}">
-                            <input type="hidden" name="quantity" value="1">
-                        </form>
+                        <a href="{{ url('cart') }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+
                     </div>
                 </div>
             @endforeach
