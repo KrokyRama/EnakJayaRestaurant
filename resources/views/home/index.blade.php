@@ -258,22 +258,86 @@
 <script src="assets/js/form-validate.js"></script>
 <!-- main js -->
 <script src="assets/js/main.js"></script>
-
-    @if(session('success'))
-        <div id="success-popup" class="popup">
-            <p>{{ session('success') }}</p>
-            <button onclick="closePopup()">Close</button>
+{{--popup pesanan berhasil dibuat--}}
+    <!-- Checkout Popup Modal -->
+    <div id="checkoutModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Checkout Sukses!</h2>
+            <p>Terima kasih telah melakukan pembelian. Silakan menuju kasir untuk pembayaran.</p>
+            <a href="/shop" class="button">Beli lagi?</a>
         </div>
+    </div>
+
+    @if(session('checkout_success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var modal = document.getElementById('checkoutModal');
+                modal.style.display = 'block';
+
+                var closeBtn = document.getElementsByClassName('close-btn')[0];
+                closeBtn.onclick = function() {
+                    modal.style.display = 'none';
+                };
+
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                        modal.style.display = 'none';
+                    }
+                };
+            });
+        </script>
     @endif
 
-    <script>
-        function closePopup() {
-            document.getElementById('success-popup').style.display = 'none';
+
+    <style>
+        /* Style untuk modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
         }
 
-        // Optionally, you can auto-close the popup after a few seconds
-        setTimeout(closePopup, 5000);
-    </script>
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .close-btn {
+            color: red;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: darkred;
+            cursor: pointer;
+        }
+
+        .button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .button:hover {
+            background-color: #218838;
+        }
+    </style>
 </body>
 </html>
 

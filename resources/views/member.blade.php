@@ -25,7 +25,12 @@
             background-color: var(--background-color);
             color: var(--text-color);
         }
-
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
         .container {
             width: 90%;
             max-width: 1200px;
@@ -399,6 +404,7 @@
             font-size: 16px;
         }
     </style>
+
 </head>
 <body>
     <div class="header">
@@ -406,6 +412,18 @@
         <p>Enak Jaya Restaurant</p>
         <!-- Welcome Back Message -->
 {{--        <div class="welcome-message" id="welcomeMessage" style="left: 50%; transform: translateX(-50%);">Welcome Back, John Doe!</div>--}}
+    </div>
+    <!-- Back to Home section -->
+    <div class="button-container">
+        <a href="{{ url('/') }}" class="button" id="backHomeBtn">
+            <i class="fas fa-home"></i>Back to Home
+        </a>
+        <form action="{{ route('logout') }}" method="POST" id="logoutForm">
+            @csrf
+            <button type="submit" class="button" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </form>
     </div>
 
     <div class="container">
@@ -417,51 +435,46 @@
             </div>
             <div class="section-content">
                 <!-- Current Profile Container -->
-                <div class="current-profile" id="currentProfile">
+                <div class="current-profile">
                     <h3>Current Profile</h3>
                     <div class="profile-details">
-                        <p><strong>Name:</strong> <span id="currentName">John Doe</span></p>
-                        <p><strong>Phone Number:</strong> <span id="currentPhone">+1234567890</span></p>
-                        <p><strong>Gender:</strong> <span id="currentGender">Male</span></p>
-                        <p><strong>Email:</strong> <span id="currentEmail">johndoe@example.com</span></p>
+                        <p><strong>Name:</strong> {{ $customer->nama }}</p>
+                        <p><strong>Phone Number:</strong> {{ $customer->nomor_telepon }}</p>
+                        <p><strong>Gender:</strong> {{ $customer->gender == 0 ? 'Male' : 'Female' }}</p>
+                        <p><strong>Email:</strong> {{ $customer->email }}</p>
                     </div>
                 </div>
                 <!-- End of Current Profile Container -->
 
-                <form id="editProfileForm">
+                <form id="editProfileForm" action="{{ route('member.updateProfile') }}" method="POST">
+                    @csrf
                     <div class="input-group-flex">
                         <div>
                             <label for="name" class="large-label">Name:</label>
-                            <input class="input" type="text" id="name" name="name" placeholder="Enter your name" required>
+                            <input class="input" type="text" id="name" name="name" value="{{ $customer->nama }}" required>
                         </div>
                         <div>
                             <label for="phone" class="large-label">Phone Number:</label>
-                            <input class="input" type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+                            <input class="input" type="tel" id="phone" name="phone" value="{{ $customer->nomor_telepon }}" required>
                         </div>
                         <div>
                             <label for="gender" class="large-label">Gender:</label>
                             <select class="input" id="gender" name="gender" required>
-                                <option value="" disabled selected>Select gender</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                                <option value="other">Other</option>
+                                <option value="male" {{ $customer->gender == 0 ? 'selected' : '' }}>Male</option>
+                                <option value="female" {{ $customer->gender == 1 ? 'selected' : '' }}>Female</option>
                             </select>
                         </div>
                         <div>
                             <label for="email" class="large-label">Email:</label>
-                            <input class="input" type="email" id="email" name="email" placeholder="Enter your email" required>
-                        </div>
-                        <div>
-                            <label for="password" class="large-label">New Password:</label>
-                            <input class="input" type="password" id="password" name="password" placeholder="Enter new password">
-                        </div>
-                        <div>
-                            <label for="confirmPassword" class="large-label">Confirm New Password:</label>
-                            <input class="input" type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm new password">
+                            <input class="input" type="email" id="email" name="email" value="{{ $customer->email }}" required>
                         </div>
                     </div>
                     <button type="submit" class="submit-btn1">Save Changes</button>
                 </form>
+
+                @if(session('success'))
+                    <div class="message" style="color: green">{{ session('success') }}</div>
+                @endif
             </div>
         </div>
 
@@ -476,13 +489,41 @@
                     <thead>
                         <tr>
                             <th>Order No.</th>
-                            <th>Date</th>
+                            <th>Tanggal</th>
                             <th>Total</th>
-                            <th>Status</th>
+                            <th>Jenis Pesanan</th>
+                            <th>Status Pesanan</th>
                         </tr>
                     </thead>
                     <tbody id="historyTableBody">
-                        <!-- Purchase history data will be inserted here -->
+                    @if($allpurchaseHistory->isEmpty())
+                        <tr>
+                            <td colspan="4" class="text-center">No purchase history found.</td>
+                        </tr>
+                    @else
+                        @foreach($allpurchaseHistory as $order)
+                            <tr>
+                                <td>{{ $order->order_id }}</td>
+                                <td>{{ \Carbon\Carbon::parse($order->order_date)->format('d-m-Y') }}</td>
+                                <td>
+                                    @php
+                                        $totalPrice = 0;
+                                        foreach($order->orderDetails as $detail) {
+                                            $totalPrice += $detail->quantity * $detail->menu->price;
+                                        }
+
+                                        // Tambahkan biaya takeaway sebesar Rp.3000 jika jenis pesanan adalah takeaway
+                                        if ($order->jenis_pesanan == 'takeaway') {
+                                            $totalPrice += 3000;
+                                        }
+                                    @endphp
+                                    Rp {{ number_format($totalPrice, 0, ',', '.') }}
+                                </td>
+                                <td>{{ $order->jenis_pesanan}}</td>
+                                <td>{{ $order->status_pesanan == 0 ? 'Pending' : 'Completed' }}</td>
+                            </tr>
+                        @endforeach
+                    @endif
                     </tbody>
                 </table>
             </div>
@@ -497,35 +538,49 @@
             <div class="section-content">
                 <div class="stats">
                     <div class="stat">
-                        <div class="stat-value" id="totalPoints">0</div>
+                        <div class="stat-value">{{ number_format($totalPoints, 0, ',', '.') }}</div>
                         <div class="stat-label">Total Points</div>
                     </div>
                     <div class="stat">
-                        <div class="stat-value" id="goalPoints">0%</div>
+                        <div class="stat-value" id="goalPoints">{{ number_format($goalPointsPercentage, 0) }}%</div>
                         <div class="stat-label">Goal Points</div>
                     </div>
                 </div>
                 <div class="progress-bar">
-                    <div class="progress" id="progressBar"></div>
+                    <div class="progress" id="progressBar" style="width: {{ $goalPointsPercentage }}%;"></div>
                 </div>
                 <div class="input-group">
                     <input type="text" id="orderIdInput" placeholder="Enter Your Order ID">
                     <button id="submitBtn" class="submit-btn">Submit</button>
                 </div>
                 <div id="message" class="message"></div>
-                <div class="celebration" id="celebration">
-                    <h2>Congratulations!</h2>
-                    <p>You have earned points!</p>
-                    <p>Your discount voucher code: <strong id="voucherCode"></strong></p>
-                </div>
+                @if($voucherCode)
+                    <div class="celebration" id="celebration">
+                        <h3>Congratulations! You earned a discount voucher.</h3>
+                        <p>Your Voucher Code: <strong>{{ $voucherCode }}</strong></p>
+                        <p>Your discount voucher code: <strong>{{ $voucherCode }}</strong></p>
+                    </div>
+                @endif
 
                 <div class="voucher-list" id="voucherList">
                     <div class="voucher-header" id="voucherHeader">
                         <span>Your Vouchers</span>
                         <span>&#9660;</span>
                     </div>
-                    <div class="voucher-content" id="voucherContent">
-                        <div id="voucherItems"></div>
+{{--                    <div class="voucher-content" id="voucherContent">--}}
+{{--                        <div id="voucherItems">--}}
+                    @if($vouchers && count($vouchers) > 0)
+                            @foreach($vouchers as $voucher)
+                                <div class="voucher-item {{ $voucher->used ? 'used' : '' }}">
+                                    <p><strong>Voucher Code:</strong> {{ $voucher->voucher_code }}</p>
+                                    <p><strong>Discount:</strong> {{ $voucher->discount }}%</p>
+                                    <p><strong>Status:</strong> {{ $voucher->used ? 'Used' : 'Unused' }}</p>
+                                </div>
+                            @endforeach
+                        @else
+                            <p>No vouchers available.</p>
+                        @endif
+                        </div>
                     </div>
                 </div>
 
@@ -545,7 +600,14 @@
                                 </tr>
                             </thead>
                             <tbody id="pointsHistoryTableBody">
-                                <!-- Points history data will be inserted here -->
+                            @foreach($pointsHistory as $entry)
+                                <tr>
+                                    <td>{{ $entry['order_id'] }}</td>
+                                    <td>Rp {{ number_format($entry['total_spending'], 0, ',', '.') }}</td>
+                                    <td>{{ number_format($entry['points_earned'], 0, ',', '.') }} points</td>
+                                    <td>{{ \Carbon\Carbon::parse($entry['order_date'])->format('d-m-Y') }}</td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -553,6 +615,7 @@
             </div>
         </div>
     </div>
+
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -754,20 +817,23 @@
 
         // Function to display vouchers
         function updateVoucherDisplay() {
+            const voucherItems = document.getElementById('voucherItems');
             voucherItems.innerHTML = '';
             if (memberData.vouchers && memberData.vouchers.length > 0) {
                 memberData.vouchers.forEach(voucher => {
                     const voucherDiv = document.createElement('div');
                     voucherDiv.className = 'voucher-item ' + (voucher.used ? 'used' : '');
                     voucherDiv.innerHTML = `
-                        <p><strong>Voucher Code:</strong> ${voucher.code}</p>
-                        <p><strong>Discount:</strong> 10%</p>
-                        <button onclick="useVoucher('${voucher.code}')" ${voucher.used ? 'disabled' : ''}>Use Voucher</button>
-                    `;
+                    <p><strong>Voucher Code:</strong> ${voucher.code}</p>
+                    <p><strong>Discount:</strong> 10%</p>
+                    <button onclick="useVoucher('${voucher.code}')" ${voucher.used ? 'disabled' : ''}>Use Voucher</button>
+                `;
                     voucherItems.appendChild(voucherDiv);
                 });
+                document.getElementById('voucherContent').style.display = 'block';
             } else {
                 voucherItems.innerHTML = '<p>No vouchers available.</p>';
+                document.getElementById('voucherContent').style.display = 'none';
             }
         }
 
@@ -790,6 +856,7 @@
             voucherHeader.querySelector('span:last-child').innerHTML = isVisible ? '&#9650;' : '&#9660;';
         });
 
+
         // Handle Points History Header Click
         historyHeader.addEventListener('click', function() {
             const isVisible = historyContent.style.display === 'block';
@@ -807,12 +874,17 @@
     function toggleSection(sectionId) {
         const section = document.getElementById(sectionId);
         const sections = document.querySelectorAll('.section');
-        sections.forEach(s => {
-            if (s !== section) {
-                s.classList.remove('active');
-                s.querySelector('.section-content').style.display = 'none';
-            }
-        });
+
+        // Only toggle main sections (not sub-sections like history dropdown)
+        if (section.classList.contains('section')) {
+            sections.forEach(s => {
+                if (s !== section) {
+                    s.classList.remove('active');
+                    s.querySelector('.section-content').style.display = 'none';
+                }
+            });
+        }
+
         section.classList.toggle('active');
         const content = section.querySelector('.section-content');
         content.style.display = section.classList.contains('active') ? 'block' : 'none';
@@ -827,6 +899,7 @@
         // In a real application, fetch data from the server based on the section.
     }
     </script>
+    <script src="https://kit.fontawesome.com/7b94ce0608.js" crossorigin="anonymous"></script>
 
 </body>
 </html>

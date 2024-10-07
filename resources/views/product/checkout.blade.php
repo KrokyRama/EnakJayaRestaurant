@@ -316,7 +316,64 @@
 </div>
 
 <!-- end footer -->
+    <!-- Checkout Popup Modal -->
+    <div id="checkoutModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Checkout Sukses!</h2>
+            <p>Silakan menuju kasir untuk pembayaran.</p>
+            <a href="/kasir" class="button">Menuju Kasir</a>
+        </div>
+    </div>
 
+    <style>
+        /* Style untuk modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .close-btn {
+            color: red;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: darkred;
+            cursor: pointer;
+        }
+
+        .button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .button:hover {
+            background-color: #218838;
+        }
+    </style>
 
 <!-- jquery -->
 <script src="assets/js/jquery-1.11.3.min.js"></script>

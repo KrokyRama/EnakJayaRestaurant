@@ -10,11 +10,16 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\MemberController;
+
+
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/admin', [HomeController::class, 'admin'])->name('admin');
-Route::get('/member', [HomeController::class, 'member'])->name('member');
-
+Route::get('/member', [MemberController::class, 'member'])->name('member');
+Route::post('/member/update-profile', [MemberController::class, 'updateProfile'])
+    ->name('member.updateProfile')
+    ->middleware('auth');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -79,7 +84,7 @@ Route::put('/adminmeja/update/{id}', [TableController::class, 'update'])->name('
 // Tambahkan rute untuk data pelanggan
 Route::get('/adminpelanggan', [CustomerController::class, 'index']);
 
-Route::get('/admintransaksi', [OrderController::class, 'index'])->name('transaksi.index');  
+Route::get('/admintransaksi', [OrderController::class, 'index'])->name('transaksi.index');
 // Route untuk menampilkan form edit transaksi
 Route::get('/admintransaksi/{id}/edit', [OrderController::class, 'edit'])->name('transaksi.edit');
 // Route untuk memperbarui transaksi

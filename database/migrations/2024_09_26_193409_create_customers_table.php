@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('email')->unique()->nullable();
             $table->string('nomor_telepon')->nullable();
             $table->tinyInteger('gender')->nullable();
+            $table->integer('total_points')->default(0);
             $table->timestamps();
         });
 

@@ -86,8 +86,9 @@ class CheckoutController extends Controller
         // Kosongkan keranjang belanja setelah checkout
         session()->forget('cart');
         session()->forget('discount');
+        session()->flash('checkout_success', true);
 
-        return redirect()->to('/')->with('success', 'Your order has been processed successfully!');
+        return redirect()->to('/');
     }
 
 }

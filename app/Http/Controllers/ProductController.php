@@ -43,7 +43,7 @@ class ProductController extends Controller
 
         // Jika item sudah ada di cart, maka tambahkan quantity
         if (isset($cart[$request->menu_id])) {
-            $cart[$request->menu_id]['quantity']++;
+            $cart[$request->menu_id]['quantity'] += $quantity;
         } else {
             // Menambahkan item ke cart
             $cart[$request->menu_id] = [

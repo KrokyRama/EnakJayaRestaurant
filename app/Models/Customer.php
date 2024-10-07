@@ -17,7 +17,8 @@ class Customer extends Model
         'nama',
         'email',
         'nomor_telepon',
-        'gender'
+        'gender',
+        'total_points'
     ];
 
     public function orders()

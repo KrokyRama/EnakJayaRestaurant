@@ -43,4 +43,20 @@ class OrderController extends Controller
 
         return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil diperbarui!');
     }
+
+    public function adminTransaksi()
+    {
+        $orders = Order::with('orderDetails.menu')->get();
+
+        // Calculate total price for each order
+        foreach ($orders as $order) {
+            $totalPrice = 0;
+            foreach ($order->orderDetails as $detail) {
+                $totalPrice += $detail->quantity * $detail->menu->price;
+            }
+            $order->total_price = $totalPrice;
+        }
+
+        return view('admintransaksi', compact('orders'));
+    }
 }

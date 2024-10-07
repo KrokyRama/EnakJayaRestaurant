@@ -68,6 +68,7 @@
                     <th>Nama Cust</th>
                     <th>Nomor Meja</th>
                     <th>Jenis Pesanan</th>
+                    <th>Total Harga</th>
                     <th>Metode Pembayaran</th>
                     <th>Status Pembayaran</th>
                     <th>Status Pesanan</th>
@@ -82,6 +83,20 @@
                         <td>{{ $order->customer->nama }}</td>
                         <td>{{ $order->meja_id }}</td>
                         <td>{{ $order->jenis_pesanan }}</td>
+                        <td>
+                            @php
+                                $totalPrice = 0;
+                                foreach($order->orderDetails as $detail) {
+                                    $totalPrice += $detail->quantity * $detail->menu->price;
+                                }
+
+                                // Tambahkan biaya takeaway sebesar Rp.3000 jika jenis pesanan adalah takeaway
+                                if ($order->jenis_pesanan == 'takeaway') {
+                                    $totalPrice += 3000;
+                                }
+                            @endphp
+                            Rp {{ number_format($totalPrice, 0, ',', '.') }}
+                        </td>
                         <td>{{ $order->payment->metode_pembayaran }}</td>
                         <td>{{ $order->payment->status_pembayaran == 1 ? 'Lunas' : 'Belum Lunas' }}</td>
                         <td>{{ $order->status_pesanan == 1 ? 'Selesai' : 'Belum Selesai' }}</td>

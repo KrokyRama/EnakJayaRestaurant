@@ -191,8 +191,14 @@
                         <p class="product-price">
                             <span>Per Pcs</span> Rp {{ number_format($menu->price, 0, ',', '.') }}
                         </p>
-                        <a href="{{ url('cart') }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-
+                        <a href="javascript:void(0);" class="cart-btn" onclick="document.getElementById('addToCartForm-{{ $menu->menu_id }}').submit();">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </a>
+                        <form id="addToCartForm-{{ $menu->menu_id }}" action="{{ route('addToCart') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="menu_id" value="{{ $menu->menu_id }}">
+                            <input type="hidden" name="quantity" value="1">
+                        </form>
                     </div>
                 </div>
             @endforeach
