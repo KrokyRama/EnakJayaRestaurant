@@ -72,23 +72,27 @@
                                 </ul>
                             </li>
                             <li>
-                                <div class="header-icons">
-                                    <a class="shopping-cart" href="{{ url('cart') }}"><i class="fas fa-shopping-cart"></i></a>
-                                    @if (Auth::check())
-                                        <!-- Tombol Logout -->
-                                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                            <i class="fa-solid fa-right-from-bracket"></i>
-                                        </a>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            @csrf
-                                        </form>
-                                    @else
-                                        <!-- Tombol Login -->
-                                        <a href="{{ url('/login') }}">
-                                            <i class="fas fa-user"></i>
-                                        </a>
-                                    @endif
-                                </div>
+                            <div class="header-icons">
+                                <a class="shopping-cart" href="{{ url('/cart') }}"><i class="fas fa-shopping-cart"></i></a>
+                                @if (Auth::check())
+                                    <!-- Link ke halaman Member -->
+                                    <a href="{{ url('/member') }}" title="Member Area">
+                                        <i class="fas fa-user"></i>
+                                    </a>
+                                    <!-- Tombol Logout -->
+                                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" title="Logout">
+                                        <i class="fa-solid fa-right-from-bracket"></i>
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                @else
+                                    <!-- Tombol Login -->
+                                    <a href="{{ url('/login') }}" title="Login">
+                                        <i class="fas fa-user"></i>
+                                    </a>
+                                @endif
+                            </div>
                             </li>
                         </ul>
                     </nav>
@@ -162,7 +166,7 @@
                             </a>
                         </div>
                         <h3>{{ $menu->nama_menu }}</h3>
-                        <p class="product-price"><span>Per Porsi</span> Rp {{ number_format($menu->price, 0, ',', '.') }} </p>
+                        <p class="product-price"><span>Per Pcs</span> Rp {{ number_format($menu->price, 0, ',', '.') }} </p>
                         <form id="addToCartForm-{{ $menu->menu_id }}" action="{{ route('addToCart') }}" method="POST" style="display: none;">
                             @csrf
                             <input type="hidden" name="menu_id" value="{{ $menu->menu_id }}">
