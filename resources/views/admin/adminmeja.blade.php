@@ -52,20 +52,21 @@
         <h1>Admin EnakJaya</h1>
         <nav class="navbar">
             <ul>
-                <li><a href="/admintransaksi">Data Transaksi</a></li>
-                <li><a href="/adminorderdetail">Data Detail Transaksi</a></li>
-                <li><a href="/adminpelanggan">Data Pelanggan</a></li>
-                <li><a href="/adminsaran">Data Saran dan Keluhan</a></li>
-                <li><a href="/adminmenu">Data Menu</a></li>
-                <li><a href="/adminmeja">Data Meja</a></li>
-                <li>
-                    <div class="button-container">
-                        <a href="{{ url('/') }}" class="button" id="logoutBtn">
-                            <i class="fa-solid fa-right-from-bracket"></i> Logout
+            <li><a href="/admintransaksi">Data Transaksi</a></li>
+            <li><a href="/adminpelanggan">Data Pelanggan</a></li>
+            <li><a href="/adminsaran">Data Saran dan Keluhan</a></li>
+            <li><a href="/adminmenu">Data Menu</a></li>
+            <li><a href="/adminmeja">Data Meja</a></li>
+            <li>
+                <div class="button-container">
+                                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="button" id="logoutBtn" title="Logout">
+                            <i class="fas fa-sign-out-alt"></i> Logout
                         </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </div>
                 </li>
-
             </ul>
         </nav>
     </header>

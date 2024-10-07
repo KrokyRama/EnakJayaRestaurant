@@ -45,7 +45,7 @@ class CheckoutController extends Controller
 
         // Jika user login, gunakan data user
         if (Auth::check()) {
-            $customer = Customer::where('email', Auth::user()->email)->first();;
+            $customer = Customer::where('email', Auth::user()->email)->first();
         } else {
             // Jika user tidak login (guest checkout)
             $customer = Customer::create([
@@ -55,6 +55,22 @@ class CheckoutController extends Controller
                 'gender' => null,
             ]);
         }
+
+        // Hitung subtotal
+        $subtotal = 0;
+        foreach ($cart as $id => $details) {
+            $subtotal += $details['price'] * $details['quantity'];
+        }
+
+        // Cek apakah ada voucher yang digunakan dan hitung diskon
+        $discount = 0;
+        if (session()->has('voucher')) {
+            $voucher = session()->get('voucher');
+            $discount = ($voucher['diskon'] / 100) * $subtotal; // Misal diskon dalam bentuk persentase
+        }
+
+        // Hitung total setelah diskon
+        $total = $subtotal - $discount;
 
         // Save the order
         $order = Order::create([
@@ -75,20 +91,24 @@ class CheckoutController extends Controller
             ]);
         }
 
-        // Save payment
+        // Save payment, termasuk total yang sudah dikurangi diskon
         $payment = Payment::create([
             'order_id' => $order->order_id,
             'metode_pembayaran' => $request->payment_option,
+            'amount' => $total, // Total setelah diskon
             'status_pembayaran' => 0,
             'payment_date' => now(),
         ]);
 
-        // Kosongkan keranjang belanja setelah checkout
+        // Kosongkan keranjang belanja dan voucher setelah checkout
         session()->forget('cart');
-        session()->forget('discount');
+        session()->forget('voucher');
         session()->flash('checkout_success', true);
 
         return redirect()->to('/');
     }
+
+
+
 
 }
